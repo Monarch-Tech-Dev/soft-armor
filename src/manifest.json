@@ -1,0 +1,55 @@
+{
+  "name": "Soft-Armor™ Scan",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "Right-click media → traffic-light authenticity check",
+  
+  "permissions": [
+    "activeTab",
+    "contextMenus", 
+    "scripting",
+    "storage"
+  ],
+  
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["scanner.js"],
+    "css": ["src/content/overlay.css", "src/content/context-menu.css", "src/content/banner-workflow.css", "src/content/ui-response-system.css", "src/content/ui-banner.css"],
+    "run_at": "document_idle"
+  }],
+  
+  "action": {
+    "default_popup": "assets/popup/popup.html",
+    "default_title": "Soft-Armor Scan"
+  },
+  
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png", 
+    "128": "assets/icons/icon128.png"
+  },
+
+  "web_accessible_resources": [{
+    "resources": [
+      "opencv.js", 
+      "opencv.wasm", 
+      "models/*",
+      "src/content/*.css",
+      "src/content/overlay.css",
+      "src/content/context-menu.css", 
+      "src/content/banner-workflow.css",
+      "src/content/ui-response-system.css",
+      "src/content/ui-banner.css",
+      "detector_bg.wasm"
+    ],
+    "matches": ["<all_urls>"]
+  }]
+}
