@@ -1,0 +1,42 @@
+{
+  "name": "soft-armor",
+  "version": "0.1.0",
+  "description": "Browser extension for media authenticity scanning",
+  "main": "dist/background.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "node backup-popup.js backup && vite build && cp src/manifest.json dist/ && mkdir -p dist/assets/icons && cp src/assets/icons/* dist/assets/icons/ && mkdir -p dist/assets/popup && cp dist/src/assets/popup/popup.html dist/assets/popup/popup.html && cp dist/popup.js dist/assets/popup/popup.js && cp dist/popup.css dist/assets/popup/popup.css && mkdir -p dist/src/content && cp src/content/*.css dist/src/content/ && node backup-popup.js restore",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src",
+    "package": "npm run build && cd dist && zip -r ../soft-armor-extension.zip ."
+  },
+  "keywords": [
+    "browser-extension",
+    "c2pa",
+    "deepfake-detection",
+    "media-verification"
+  ],
+  "author": "Monarch AS",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "@types/chrome": "^0.0.246",
+    "@types/webextension-polyfill": "^0.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "playwright": "^1.40.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "@contentauth/detector": "^0.3.5",
+    "@contentauth/toolkit": "^0.13.8",
+    "@tensorflow/tfjs": "^4.15.0",
+    "c2pa": "^0.30.9",
+    "webextension-polyfill": "^0.10.0"
+  }
+}
