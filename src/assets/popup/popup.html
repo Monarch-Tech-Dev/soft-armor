@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soft-Armor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Main Container -->
+  <div class="popup-container">
+    
+    <!-- Header Section -->
+    <header class="popup-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">🛡️</div>
+          <div class="logo-text">
+            <h1 class="brand-name">Soft-Armor</h1>
+            <div class="version-badge">v0.1.0</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="settings-toggle" id="settingsToggle" aria-label="Settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Status Indicator -->
+      <div class="status-indicator" id="statusIndicator">
+        <div class="status-light active"></div>
+        <span class="status-text">Protection Active</span>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-navigation">
+      <button class="tab-btn active" data-tab="dashboard">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">Dashboard</span>
+      </button>
+      <button class="tab-btn" data-tab="history">
+        <span class="tab-icon">📜</span>
+        <span class="tab-label">History</span>
+      </button>
+      <button class="tab-btn" data-tab="upgrade" id="upgradeTab">
+        <span class="tab-icon">⭐</span>
+        <span class="tab-label">Pro</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="popup-content">
+      
+      <!-- Dashboard Tab Content -->
+      <section class="tab-content active" id="dashboard">
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🔍</div>
+            <div class="stat-content">
+              <div class="stat-number" id="todayScans">0</div>
+              <div class="stat-label">Scans Today</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-content">
+              <div class="stat-number" id="threatsBlocked">0</div>
+              <div class="stat-label">Threats Blocked</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div class="stat-number" id="authenticMedia">0</div>
+              <div class="stat-label">Authentic Media</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-content">
+              <div class="stat-number" id="suspiciousMedia">0</div>
+              <div class="stat-label">Flagged Items</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+          <h3 class="section-title">Recent Activity</h3>
+          <div class="activity-list" id="recentActivity">
+            <div class="activity-item empty">
+              <div class="activity-icon">🌿</div>
+              <div class="activity-content">
+                <div class="activity-text">No recent activity</div>
+                <div class="activity-subtext">Start scanning media to see your activity here</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="action-btn primary" id="runManualScan">
+            <span class="btn-icon">🔍</span>
+            <span class="btn-text">Scan Current Page</span>
+          </button>
+          <button class="action-btn secondary" id="runBatchScan">
+            <span class="btn-icon">📋</span>
+            <span class="btn-text">Batch Scan</span>
+          </button>
+          <button class="action-btn secondary" id="openOptions">
+            <span class="btn-icon">⚙️</span>
+            <span class="btn-text">Settings</span>
+          </button>
+        </div>
+
+        <!-- Batch Scan Panel -->
+        <div class="batch-scan-panel hidden" id="batchScanPanel">
+          <div class="batch-header">
+            <h3 class="batch-title">Batch Scan</h3>
+            <button class="batch-close" id="batchPanelClose">×</button>
+          </div>
+          
+          <div class="batch-discovery">
+            <div class="discovery-status" id="discoveryStatus">
+              <div class="discovery-icon">🔍</div>
+              <div class="discovery-text">Discovering media...</div>
+            </div>
+            <div class="media-count" id="mediaCount">Found 0 items</div>
+          </div>
+
+          <div class="batch-options">
+            <div class="batch-filter">
+              <label class="filter-label">Media types:</label>
+              <div class="filter-checkboxes">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="filterImages" checked>
+                  <span class="checkbox-text">Images</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="filterVideos" checked>
+                  <span class="checkbox-text">Videos</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="batch-limit">
+              <label class="limit-label">Scan limit:</label>
+              <select class="limit-select" id="batchLimit">
+                <option value="10">10 items</option>
+                <option value="25" selected>25 items</option>
+                <option value="50">50 items</option>
+                <option value="100">100 items</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="batch-actions">
+            <button class="action-btn primary" id="startBatchScan" disabled>
+              <span class="btn-icon">🚀</span>
+              <span class="btn-text">Start Batch Scan</span>
+            </button>
+            <button class="action-btn secondary" id="cancelBatchScan" style="display: none;">
+              <span class="btn-icon">⏹️</span>
+              <span class="btn-text">Cancel</span>
+            </button>
+          </div>
+
+          <div class="batch-progress hidden" id="batchProgress">
+            <div class="progress-header">
+              <span class="progress-text" id="progressText">Scanning...</span>
+              <span class="progress-count" id="progressCount">0/0</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-details">
+              <span class="progress-speed" id="progressSpeed">0 items/min</span>
+              <span class="progress-eta" id="progressETA">ETA: --</span>
+            </div>
+          </div>
+
+          <div class="batch-results hidden" id="batchResults">
+            <div class="results-summary">
+              <div class="summary-item">
+                <div class="summary-icon">✅</div>
+                <div class="summary-count" id="authenticCount">0</div>
+                <div class="summary-label">Authentic</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-icon">⚠️</div>
+                <div class="summary-count" id="suspiciousCount">0</div>
+                <div class="summary-label">Suspicious</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-icon">🛑</div>
+                <div class="summary-count" id="threatCount">0</div>
+                <div class="summary-label">Threats</div>
+              </div>
+            </div>
+            
+            <div class="results-actions">
+              <button class="action-btn secondary" id="exportBatchResults">
+                <span class="btn-icon">📤</span>
+                <span class="btn-text">Export Results</span>
+              </button>
+              <button class="action-btn secondary" id="viewBatchHistory">
+                <span class="btn-icon">📜</span>
+                <span class="btn-text">View in History</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- History Tab Content -->
+      <section class="tab-content" id="history">
+        <div class="history-header">
+          <h3 class="section-title">Scan History</h3>
+          <div class="history-filters">
+            <select class="filter-select" id="historyFilter">
+              <option value="all">All Results</option>
+              <option value="authentic">Authentic</option>
+              <option value="suspicious">Suspicious</option>
+              <option value="threats">Threats</option>
+            </select>
+            <button class="filter-btn" id="clearHistory">Clear</button>
+          </div>
+        </div>
+        
+        <div class="history-list" id="historyList">
+          <div class="history-item empty">
+            <div class="empty-icon">📜</div>
+            <div class="empty-text">No scan history yet</div>
+            <div class="empty-subtext">Your scan results will appear here</div>
+          </div>
+        </div>
+        
+        <div class="history-stats">
+          <div class="stat-row">
+            <span class="stat-label">Total Scans:</span>
+            <span class="stat-value" id="totalScans">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Success Rate:</span>
+            <span class="stat-value" id="successRate">0%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Avg. Scan Time:</span>
+            <span class="stat-value" id="avgScanTime">0s</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pro Upgrade Tab Content -->
+      <section class="tab-content" id="upgrade">
+        <div class="upgrade-content">
+          <div class="upgrade-header">
+            <div class="upgrade-icon">⭐</div>
+            <h3 class="upgrade-title">Soft-Armor Pro</h3>
+            <p class="upgrade-subtitle">Enhanced protection and advanced features</p>
+          </div>
+          
+          <div class="feature-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🚀</div>
+              <div class="feature-text">
+                <div class="feature-title">Unlimited Scans</div>
+                <div class="feature-desc">No daily limits on media analysis</div>
+              </div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🔬</div>
+              <div class="feature-text">
+                <div class="feature-title">Advanced AI Detection</div>
+                <div class="feature-desc">Enhanced deepfake and manipulation detection</div>
+              </div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">☁️</div>
+              <div class="feature-text">
+                <div class="feature-title">Cloud Processing</div>
+                <div class="feature-desc">Faster analysis with cloud-powered AI</div>
+              </div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">📊</div>
+              <div class="feature-text">
+                <div class="feature-title">Detailed Reports</div>
+                <div class="feature-desc">Comprehensive analysis and confidence scores</div>
+              </div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🔄</div>
+              <div class="feature-text">
+                <div class="feature-title">Advanced Batch Scanning</div>
+                <div class="feature-desc">Enhanced bulk processing with detailed reporting</div>
+              </div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <div class="feature-text">
+                <div class="feature-title">Priority Support</div>
+                <div class="feature-desc">Dedicated customer support channel</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pricing-section">
+            <div class="pricing-card">
+              <div class="price-amount">€3<span class="price-period">/month</span></div>
+              <div class="price-billing">Billed monthly • Cancel anytime</div>
+              <button class="upgrade-btn primary" id="upgradeBtn">
+                <span class="btn-text">Upgrade to Pro</span>
+                <span class="btn-icon">→</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="upgrade-benefits">
+            <div class="benefit-item">
+              <span class="benefit-icon">✅</span>
+              <span class="benefit-text">7-day free trial</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">🔒</span>
+              <span class="benefit-text">Secure payment via Stripe</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">💳</span>
+              <span class="benefit-text">No long-term commitment</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Settings Panel (Sliding Overlay) -->
+    <aside class="settings-panel" id="settingsPanel">
+      <div class="settings-header">
+        <h3 class="settings-title">Settings</h3>
+        <button class="settings-close" id="settingsClose">&times;</button>
+      </div>
+      
+      <div class="settings-content">
+        
+        <!-- General Settings -->
+        <div class="settings-section">
+          <h4 class="section-heading">General</h4>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Auto-scan enabled</span>
+              <span class="label-desc">Automatically scan media when browsing</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoScanEnabled" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Show notifications</span>
+              <span class="label-desc">Display scan results as notifications</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="showNotifications" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Scan type</span>
+              <span class="label-desc">Choose scanning thoroughness and speed</span>
+            </div>
+            <select class="setting-select" id="scanSensitivity">
+              <option value="quick">Quick - Fast basic checks (~1s)</option>
+              <option value="standard" selected>Standard - Comprehensive analysis (~2s)</option>
+              <option value="deep">Deep - Maximum thoroughness (~5s)</option>
+            </select>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Show confidence scores</span>
+              <span class="label-desc">Display percentage confidence in results</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="showConfidenceScores" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Enable C2PA badges</span>
+              <span class="label-desc">Show authenticity badges on verified content</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="enableBadges" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Privacy Settings -->
+        <div class="settings-section">
+          <h4 class="section-heading">Privacy</h4>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Analytics enabled</span>
+              <span class="label-desc">Help improve Soft-Armor with anonymous usage data</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="analyticsEnabled" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Store scan history</span>
+              <span class="label-desc">Keep local history of scan results</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="storeHistory" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="settings-section">
+          <h4 class="section-heading">Advanced</h4>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Debug mode</span>
+              <span class="label-desc">Show detailed technical information</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="debugMode">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-label">
+              <span class="label-text">Performance mode</span>
+              <span class="label-desc">Optimize for speed over accuracy</span>
+            </div>
+            <select class="setting-select" id="performanceMode">
+              <option value="quality">Quality - Best accuracy</option>
+              <option value="balanced" selected>Balanced - Good speed & accuracy</option>
+              <option value="speed">Speed - Fastest processing</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="settings-actions">
+          <button class="action-btn secondary" id="exportData">
+            <span class="btn-icon">📤</span>
+            <span class="btn-text">Export Data</span>
+          </button>
+          <button class="action-btn secondary" id="resetSettings">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">Reset to Defaults</span>
+          </button>
+        </div>
+        
+        <!-- Footer Info -->
+        <div class="settings-footer">
+          <div class="footer-links">
+            <a href="#" class="footer-link" id="privacyPolicy">Privacy Policy</a>
+            <a href="#" class="footer-link" id="support">Support</a>
+            <a href="#" class="footer-link" id="feedback">Feedback</a>
+          </div>
+          <div class="footer-version">Version 0.1.0</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Overlay for settings panel -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

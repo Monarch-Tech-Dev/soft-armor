@@ -1,0 +1,252 @@
+/* ================================
+   Soft-Armor Design System
+   Core Visual Language & Tokens
+   ================================ */
+
+:root {
+  /* ================================
+     TRAFFIC-LIGHT COLOR SYSTEM
+     WCAG AAA Compliant
+     ================================ */
+  
+  /* Primary State Colors */
+  --color-safe-green: #059669;           /* High contrast green */
+  --color-safe-green-light: #10b981;     /* Lighter variant */
+  --color-safe-green-bg: #d1fae5;        /* Background tint */
+  --color-safe-green-hover: #047857;     /* Hover state */
+  
+  --color-warning-amber: #d97706;        /* High contrast amber */
+  --color-warning-amber-light: #f59e0b;  /* Lighter variant */
+  --color-warning-amber-bg: #fef3c7;     /* Background tint */
+  --color-warning-amber-hover: #b45309;  /* Hover state */
+  
+  --color-danger-red: #dc2626;           /* High contrast red */
+  --color-danger-red-light: #ef4444;     /* Lighter variant */
+  --color-danger-red-bg: #fee2e2;        /* Background tint */
+  --color-danger-red-hover: #b91c1c;     /* Hover state */
+  
+  /* Mercy-First Neutral Colors */
+  --color-primary: #1e293b;              /* Deep slate */
+  --color-primary-light: #334155;        /* Medium slate */
+  --color-secondary: #64748b;            /* Balanced gray */
+  --color-tertiary: #94a3b8;             /* Light gray */
+  --color-quaternary: #cbd5e1;           /* Very light gray */
+  
+  /* Background & Surface Colors */
+  --color-bg-primary: #ffffff;           /* Pure white */
+  --color-bg-secondary: #f8fafc;         /* Off-white */
+  --color-bg-tertiary: #f1f5f9;          /* Light gray */
+  --color-surface: #ffffff;              /* Card surfaces */
+  --color-border: rgba(0, 0, 0, 0.08);   /* Subtle borders */
+  --color-border-light: rgba(0, 0, 0, 0.04); /* Very subtle borders */
+  
+  /* Text Colors */
+  --color-text-primary: #1e293b;         /* Dark text */
+  --color-text-secondary: #475569;       /* Medium text */
+  --color-text-tertiary: #64748b;        /* Light text */
+  --color-text-quaternary: #94a3b8;      /* Very light text */
+  --color-text-inverse: #ffffff;         /* White text */
+  
+  /* Interactive Colors */
+  --color-link: #3b82f6;                 /* Blue links */
+  --color-link-hover: #2563eb;           /* Darker blue on hover */
+  --color-focus: #3b82f6;                /* Focus ring color */
+  
+  /* ================================
+     SHIELD ICONOGRAPHY SYSTEM
+     ================================ */
+  
+  /* Icon Sizes */
+  --icon-xs: 12px;                       /* Micro icons */
+  --icon-sm: 16px;                       /* Small icons */
+  --icon-md: 24px;                       /* Medium icons */
+  --icon-lg: 32px;                       /* Large icons */
+  --icon-xl: 48px;                       /* Extra large icons */
+  --icon-xxl: 64px;                      /* Extension icons */
+  --icon-brand: 128px;                   /* Brand/store icons */
+  
+  /* Shield Stroke Weights */
+  --shield-stroke-thin: 1px;
+  --shield-stroke-regular: 1.5px;
+  --shield-stroke-medium: 2px;
+  --shield-stroke-bold: 2.5px;
+  
+  /* ================================
+     TYPOGRAPHY HIERARCHY
+     ================================ */
+  
+  /* Font Families */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  /* Font Sizes */
+  --text-xs: 10px;                       /* Micro text */
+  --text-sm: 12px;                       /* Small text */
+  --text-base: 14px;                     /* Base text */
+  --text-lg: 16px;                       /* Large text */
+  --text-xl: 18px;                       /* Extra large text */
+  --text-2xl: 20px;                      /* 2X large text */
+  --text-3xl: 24px;                      /* 3X large text */
+  --text-4xl: 32px;                      /* 4X large text */
+  
+  /* Line Heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.4;
+  --leading-relaxed: 1.6;
+  --leading-loose: 1.8;
+  
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  
+  /* ================================
+     SPACING SYSTEM
+     ================================ */
+  
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  
+  /* ================================
+     BORDER RADIUS SYSTEM
+     ================================ */
+  
+  --radius-sm: 4px;
+  --radius-base: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  
+  /* ================================
+     SHADOW SYSTEM
+     ================================ */
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  
+  /* ================================
+     ANIMATION TIMING
+     ================================ */
+  
+  /* Duration */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+  
+  /* Easing Functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* ================================
+     Z-INDEX SYSTEM
+     ================================ */
+  
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-banner: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+  --z-notification: 600;
+  --z-tooltip: 700;
+  --z-maximum: 999;
+}
+
+/* ================================
+   DARK MODE OVERRIDES
+   ================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Traffic Light Colors (Slightly muted for mercy-first approach) */
+    --color-safe-green: #10b981;
+    --color-safe-green-bg: rgba(16, 185, 129, 0.1);
+    
+    --color-warning-amber: #f59e0b;
+    --color-warning-amber-bg: rgba(245, 158, 11, 0.1);
+    
+    --color-danger-red: #f87171;
+    --color-danger-red-bg: rgba(248, 113, 113, 0.1);
+    
+    /* Dark Mode Background Colors */
+    --color-bg-primary: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-surface: #1e293b;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-light: rgba(255, 255, 255, 0.05);
+    
+    /* Dark Mode Text Colors */
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #cbd5e1;
+    --color-text-tertiary: #94a3b8;
+    --color-text-quaternary: #64748b;
+  }
+}
+
+/* ================================
+   REDUCED MOTION PREFERENCES
+   ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+  
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
+   HIGH CONTRAST MODE
+   ================================ */
+
+@media (prefers-contrast: high) {
+  :root {
+    /* Enhanced contrast for accessibility */
+    --color-safe-green: #006600;
+    --color-warning-amber: #cc6600;
+    --color-danger-red: #cc0000;
+    
+    --color-text-primary: #000000;
+    --color-border: rgba(0, 0, 0, 0.2);
+  }
+}

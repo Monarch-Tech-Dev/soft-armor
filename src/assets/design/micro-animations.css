@@ -1,0 +1,473 @@
+/* ================================
+   Micro-Animation Library
+   Scan States & Transitions
+   ================================ */
+
+/* ================================
+   SCANNING ANIMATIONS
+   ================================ */
+
+@keyframes scanPulse {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05);
+  }
+}
+
+@keyframes scanRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes scanDots {
+  0%, 20% { opacity: 0.3; }
+  50% { opacity: 1; }
+  80%, 100% { opacity: 0.3; }
+}
+
+@keyframes scanWave {
+  0% { 
+    transform: translateX(-100%); 
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(200%); 
+    opacity: 0;
+  }
+}
+
+@keyframes scanProgressBar {
+  0% { width: 0%; }
+  25% { width: 30%; }
+  50% { width: 60%; }
+  75% { width: 85%; }
+  100% { width: 100%; }
+}
+
+/* ================================
+   RESULT REVEAL ANIMATIONS
+   ================================ */
+
+@keyframes resultFadeIn {
+  0% { 
+    opacity: 0; 
+    transform: translateY(8px) scale(0.95);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes resultSlideIn {
+  0% { 
+    opacity: 0; 
+    transform: translateX(-16px);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+@keyframes resultBounceIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.3);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05);
+  }
+  70% { 
+    transform: scale(0.9);
+  }
+  100% { 
+    transform: scale(1);
+  }
+}
+
+@keyframes resultGlow {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% { 
+    box-shadow: 0 0 0 4px rgba(currentColor, 0.2);
+  }
+}
+
+/* ================================
+   STATE TRANSITION ANIMATIONS
+   ================================ */
+
+@keyframes stateChange {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes colorTransition {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes shieldAppear {
+  0% { 
+    opacity: 0;
+    transform: scale(0.8) translateY(-4px);
+  }
+  60% { 
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+  100% { 
+    transform: scale(1);
+  }
+}
+
+@keyframes shieldDisappear {
+  0% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(0.8) translateY(-4px);
+  }
+}
+
+/* ================================
+   HOVER & INTERACTION ANIMATIONS
+   ================================ */
+
+@keyframes hoverLift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
+
+@keyframes hoverGlow {
+  0% { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+  100% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); }
+}
+
+@keyframes clickRipple {
+  0% { 
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes focusRing {
+  0% { 
+    box-shadow: 0 0 0 0 var(--color-focus);
+  }
+  100% { 
+    box-shadow: 0 0 0 3px rgba(var(--color-focus), 0.3);
+  }
+}
+
+/* ================================
+   PROGRESS ANIMATIONS
+   ================================ */
+
+@keyframes progressFill {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes progressShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes loadingSpinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ================================
+   NOTIFICATION ANIMATIONS
+   ================================ */
+
+@keyframes notificationSlideIn {
+  0% { 
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notificationSlideOut {
+  0% { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes notificationShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ================================
+   UTILITY ANIMATION CLASSES
+   ================================ */
+
+/* Scanning States */
+.animate-scan-pulse {
+  animation: scanPulse 2s ease-in-out infinite;
+}
+
+.animate-scan-rotate {
+  animation: scanRotate 1.5s linear infinite;
+}
+
+.animate-scan-dots {
+  animation: scanDots 1.5s ease-in-out infinite;
+}
+
+.animate-scan-wave {
+  animation: scanWave 2s ease-in-out infinite;
+}
+
+.animate-scan-progress {
+  animation: scanProgressBar 3s ease-out forwards;
+}
+
+/* Result Reveals */
+.animate-result-fade-in {
+  animation: resultFadeIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-result-slide-in {
+  animation: resultSlideIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-result-bounce-in {
+  animation: resultBounceIn var(--duration-slow) var(--ease-bounce) forwards;
+}
+
+.animate-result-glow {
+  animation: resultGlow 2s ease-in-out infinite;
+}
+
+/* State Transitions */
+.animate-state-change {
+  animation: stateChange var(--duration-normal) var(--ease-out);
+}
+
+.animate-color-transition {
+  animation: colorTransition var(--duration-normal) var(--ease-out);
+}
+
+.animate-shield-appear {
+  animation: shieldAppear var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-shield-disappear {
+  animation: shieldDisappear var(--duration-fast) var(--ease-in) forwards;
+}
+
+/* Interactions */
+.animate-hover-lift {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.animate-hover-lift:hover {
+  animation: hoverLift var(--duration-fast) var(--ease-out) forwards;
+}
+
+.animate-hover-glow {
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.animate-hover-glow:hover {
+  animation: hoverGlow var(--duration-fast) var(--ease-out) forwards;
+}
+
+.animate-click-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-click-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: clickRipple 0.6s linear;
+  pointer-events: none;
+}
+
+.animate-focus-ring:focus {
+  animation: focusRing var(--duration-fast) var(--ease-out) forwards;
+}
+
+/* Progress Indicators */
+.animate-progress-fill {
+  transform-origin: left center;
+  animation: progressFill 2s var(--ease-out) forwards;
+}
+
+.animate-progress-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-progress-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: progressShimmer 2s ease-in-out infinite;
+}
+
+.animate-loading-spinner {
+  animation: loadingSpinner 1s linear infinite;
+}
+
+/* Notifications */
+.animate-notification-in {
+  animation: notificationSlideIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-notification-out {
+  animation: notificationSlideOut var(--duration-normal) var(--ease-in) forwards;
+}
+
+.animate-notification-shake {
+  animation: notificationShake 0.5s ease-in-out 3;
+}
+
+/* ================================
+   MERCY-FIRST ANIMATION PRINCIPLES
+   ================================ */
+
+/* Gentle, non-alarming animations for warnings */
+.animate-gentle-warning {
+  animation: scanPulse 3s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+/* Soft attention-grabbing for important info */
+.animate-soft-attention {
+  animation: resultGlow 4s ease-in-out infinite;
+  filter: brightness(1.1);
+}
+
+/* Calming success animations */
+.animate-success-calm {
+  animation: resultFadeIn var(--duration-slow) var(--ease-soft) forwards;
+}
+
+/* Non-jarring error states */
+.animate-error-gentle {
+  animation: resultSlideIn var(--duration-slow) var(--ease-soft) forwards;
+}
+
+/* ================================
+   ANIMATION CONTROL UTILITIES
+   ================================ */
+
+.animation-paused {
+  animation-play-state: paused !important;
+}
+
+.animation-running {
+  animation-play-state: running !important;
+}
+
+.animation-delay-short {
+  animation-delay: var(--duration-fast);
+}
+
+.animation-delay-medium {
+  animation-delay: var(--duration-normal);
+}
+
+.animation-delay-long {
+  animation-delay: var(--duration-slow);
+}
+
+/* ================================
+   RESPONSIVE ANIMATION SCALING
+   ================================ */
+
+@media (max-width: 768px) {
+  /* Reduce animation intensity on smaller screens */
+  .animate-scan-pulse {
+    animation-duration: 2.5s;
+  }
+  
+  .animate-result-bounce-in {
+    animation-name: resultFadeIn; /* Use simpler animation on mobile */
+  }
+}
+
+/* ================================
+   ACCESSIBILITY OVERRIDES
+   ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations for users who prefer reduced motion */
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Keep essential feedback animations but make them instant */
+  .animate-result-fade-in,
+  .animate-result-slide-in,
+  .animate-shield-appear {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  /* Enhance animation visibility in high contrast mode */
+  .animate-result-glow {
+    box-shadow: 0 0 8px currentColor !important;
+  }
+  
+  .animate-focus-ring:focus {
+    box-shadow: 0 0 0 3px currentColor !important;
+  }
+}
