@@ -1,0 +1,296 @@
+# 🛡️ Soft-Armor™ License
+
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+[![Community Driven](https://img.shields.io/badge/Community-Driven-brightgreen)](https://github.com/monarch-ai/soft-armor)
+
+> **A licensing approach designed for transparency, community protection, and mission alignment**
+
+---
+
+## 📋 Quick Reference
+
+**License Type:** GNU Affero General Public License v3.0 (AGPL-3.0)  
+**Commercial Use:** ✅ Allowed with transparency requirements  
+**Modifications:** ✅ Must be shared under same license  
+**Network Use:** ✅ Triggers copyleft obligations  
+**Private Use:** ✅ No restrictions  
+
+---
+
+## 🌟 Why AGPL-3.0?
+
+### Our Philosophy
+
+> *"This license is not about control—it's about protection of light. Let those who build with it be reminded: this tool was forged in sincerity. It must never become an engine of fear, but a shield of truth."*
+
+We chose AGPL-3.0 because it ensures:
+
+* 🛡️ **Prevents Proprietary Capture** - No one can take our work and hide improvements
+* 🤝 **Encourages True Collaboration** - Beneficial changes flow back to the community
+* 💡 **Maintains Mission Integrity** - Keeps Soft-Armor™ a tool for discernment, not control
+* 🌍 **Protects Global Access** - Core technology remains available to everyone
+
+---
+
+## ✅ What You Can Do
+
+### Personal & Educational Use
+
+* ✅ Use Soft-Armor™ for personal browsing and media verification
+* ✅ Study the code for educational purposes
+* ✅ Teach with it in classrooms and workshops
+* ✅ Research synthetic media detection methods
+
+### Open Source Development
+
+* ✅ Fork and modify for open source projects
+* ✅ Contribute improvements back to the main project
+* ✅ Create derived works under AGPL-3.0
+* ✅ Build complementary open source tools
+
+### Commercial Use (With Transparency)
+
+* ✅ Use in commercial products if you open source your modifications
+* ✅ Offer support services around the open source version
+* ✅ Create value-added services with transparent implementation
+* ✅ Partner with us for enterprise features
+
+---
+
+## ❌ What You Cannot Do
+
+### Proprietary Exploitation
+
+* ❌ Create closed-source versions or derivatives
+* ❌ Hide modifications in proprietary software
+* ❌ Build SaaS products without open sourcing server-side code
+* ❌ Remove or obscure attribution and license notices
+
+### Mission-Corrupting Uses
+
+* ❌ Use for surveillance or monitoring without consent
+* ❌ Create tools that increase rather than reduce manipulation
+* ❌ Build systems that centralize rather than distribute verification
+* ❌ Develop applications that harm privacy or user autonomy
+
+---
+
+## 🔍 License Comparison
+
+| License | Network Use Trigger | Modification Sharing | Commercial Use |
+|---------|-------------------|---------------------|----------------|
+| **MIT** | No requirements | Optional | Unrestricted |
+| **GPL-3.0** | Only for distribution | Required for distribution | Allowed with sharing |
+| **AGPL-3.0** | **Required for any use** | **Required for any modification** | **Allowed with full transparency** |
+
+### The "Network Copyleft" Effect
+
+AGPL-3.0's power is in closing the "SaaS loophole":
+
+* **Traditional GPL**: Only triggers when you distribute software
+* **AGPL-3.0**: Triggers when you provide software as a service over a network
+
+**This means any web service using Soft-Armor™ code must be open source.**
+
+---
+
+## 🎯 Use Case Examples
+
+### ✅ Encouraged Applications
+
+| Application | Description | License Status |
+|-------------|-------------|----------------|
+| **Educational Platforms** | Teaching media literacy with open implementations | ✅ Compliant |
+| **News Organizations** | Building transparent verification workflows | ✅ Compliant |
+| **Research Institutions** | Studying synthetic media with published methods | ✅ Compliant |
+| **Privacy-Focused Browsers** | Integrating verification with user consent | ✅ Compliant |
+| **Open Source Social Platforms** | Community-driven fact-checking tools | ✅ Compliant |
+
+### ❌ Problematic Applications
+
+| Application | Issue | Required Action |
+|-------------|-------|----------------|
+| **Surveillance Companies** | Using privacy tech for monitoring | 🚫 Violates mission |
+| **Closed Platforms** | Proprietary content filtering | 📝 Must open source |
+| **Manipulation Services** | Using detection to improve deception | 🚫 Violates mission |
+| **Centralized Censorship** | Removing user agency and choice | 🚫 Violates mission |
+
+---
+
+## 🏢 Enterprise & Commercial Options
+
+### Open Source Path (Free)
+
+* ✅ Full commercial use allowed
+* ✅ Must open source modifications
+* ✅ Must contribute improvements back
+* ✅ Maintain community access
+
+### Commercial License Path (Paid)
+
+* ✅ Proprietary integration rights
+* ✅ Custom enterprise features
+* ✅ Priority support and consulting
+* ✅ Protected intellectual property usage
+
+### Partnership Principles
+
+We welcome partnerships that align with our values:
+
+* 🎯 **Mission Alignment** - Share our commitment to user empowerment
+* 🔍 **Transparency** - Commercial uses should enhance trust
+* 🤝 **Community Benefit** - Strengthen the open source ecosystem
+* 🛡️ **Privacy Respect** - No surveillance or manipulation focus
+
+---
+
+## 🚀 Getting Started
+
+### 1. Using Soft-Armor™
+
+```bash
+# Clone the repository
+git clone https://github.com/monarch-ai/soft-armor
+cd soft-armor
+
+# Install dependencies
+npm install
+
+# Build and run
+npm run build
+```
+
+### 2. Contributing Back
+
+```bash
+# Create feature branch
+git checkout -b feature/your-improvement
+
+# Make your changes
+# ... code changes ...
+
+# Submit pull request
+git push origin feature/your-improvement
+```
+
+### 3. Commercial Integration
+
+For commercial use, ensure you:
+
+1. **Keep modifications open source**
+2. **Maintain proper attribution**
+3. **Contribute improvements back**
+4. **Respect user privacy and choice**
+
+---
+
+## 🤝 How to Comply
+
+### Essential Steps
+
+1. **Respect the Mission**
+   - Ask: *"Does my use serve human discernment and choice?"*
+
+2. **Share Improvements**
+   - Any modifications that improve detection, performance, or UX → community
+
+3. **Maintain Attribution**
+   - Always include proper attribution and license notices
+
+4. **Preserve Privacy**
+   - Don't use our privacy-preserving architecture for surveillance
+
+5. **Enable Choice**
+   - Build tools that inform and empower, never control or manipulate
+
+### Code Headers
+
+Include this header in all derivative files:
+
+```typescript
+/*
+ * This file is part of a work derived from Soft-Armor™
+ * Original work Copyright (C) 2025 Monarch AS
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+```
+
+---
+
+## 📞 Support & Contact
+
+### Questions About Licensing?
+
+| Type | Contact |
+|------|---------|
+| **General Questions** | [community@softarmor.tech](mailto:community@softarmor.tech) |
+| **Commercial Licensing** | [licensing@softarmor.tech](mailto:licensing@softarmor.tech) |
+| **Partnership Discussions** | [partnerships@softarmor.tech](mailto:partnerships@softarmor.tech) |
+| **Legal Compliance** | [legal@softarmor.tech](mailto:legal@softarmor.tech) |
+
+### Community Resources
+
+* 💬 **Discord**: [Join our community](https://discord.gg/soft-armor)
+* 🐛 **Issues**: [GitHub Issues](https://github.com/monarch-ai/soft-armor/issues)
+* 💡 **Discussions**: [GitHub Discussions](https://github.com/monarch-ai/soft-armor/discussions)
+* 📚 **Documentation**: [Full docs](https://docs.soft-armor.io)
+
+---
+
+## ⚖️ Full License Text
+
+```
+Soft-Armor™ Browser Extension
+Copyright (C) 2025 Monarch AS
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+Additional Terms (AGPL-3.0 Section 7):
+The names "Soft-Armor" and "Monarch" and all associated logos are 
+trademarks of Monarch AS and may not be used in derivative works 
+without explicit written permission.
+```
+
+**Full license text**: https://www.gnu.org/licenses/agpl-3.0.html
+
+---
+
+## 🙏 Thank You
+
+By choosing to use Soft-Armor™ under AGPL-3.0, you're joining a community committed to:
+
+* **Transparent technology** that serves users rather than exploiting them
+* **Collaborative improvement** where everyone benefits from innovation  
+* **Ethical development** that respects privacy and human agency
+* **Mission protection** that keeps our tools aligned with our values
+
+**Together, we're building technology that reminds people of their capacity for wisdom.**
+
+---
+
+<div align="center">
+
+*"The best way to honor the light is to let it shine freely,  
+while protecting it from those who would dim it for profit."*
+
+**🛡️ Soft-Armor™ Team**
+
+[Website](https://soft-armor.io) • [GitHub](https://github.com/monarch-ai/soft-armor) • [Discord](https://discord.gg/soft-armor) • [Docs](https://docs.soft-armor.io)
+
+</div>
