@@ -9,6 +9,14 @@ export interface ScanResult {
   mediaType?: 'image' | 'video';
   c2paDetails?: C2PAResult;
   confidence?: number; // 0-1 confidence score
+  aiAnalysis?: AIAnalysisInfo; // TensorFlow.js analysis results
+}
+
+export interface AIAnalysisInfo {
+  emotionScore: number; // 0-1, higher = more manipulative
+  syntheticProbability: number; // 0-1, higher = more likely synthetic
+  manipulationIndicators: string[];
+  processingTime: number; // Analysis time in seconds
 }
 
 export interface C2PAResult {

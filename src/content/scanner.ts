@@ -2,6 +2,7 @@ import { C2PAProbe } from '../detection/c2pa-probe';
 import { LoopDetector } from '../detection/loop-detector';
 import { EmotionPulse } from '../detection/emotion-pulse';
 import { SoftArmorMetadataEngine } from '../detection/soft-armor-metadata-engine';
+import { TensorFlowAnalyzer, AIAnalysisResult } from '../detection/tensorflow-analyzer';
 import { UIManager } from './ui';
 import { ScanResult, RiskLevel } from './types';
 import { ContextMenuIntegration, ScanConfig } from './context-menu-integration-fixed';
@@ -16,6 +17,7 @@ class SoftArmorScanner {
   private loopDetector: LoopDetector | null = null;
   private emotionPulse: EmotionPulse | null = null;
   private fastScanEngine: FastScanEngine | null = null;
+  private tensorFlowAnalyzer: TensorFlowAnalyzer | null = null;
   
   // Lightweight components (loaded immediately)
   private metadataEngine: SoftArmorMetadataEngine;
@@ -341,26 +343,68 @@ class SoftArmorScanner {
     return this.emotionPulse;
   }
 
+  private async getTensorFlowAnalyzer(): Promise<TensorFlowAnalyzer> {
+    if (!this.tensorFlowAnalyzer) {
+      console.log('🧠 Lazy loading TensorFlowAnalyzer...');
+      this.tensorFlowAnalyzer = new TensorFlowAnalyzer();
+      await this.tensorFlowAnalyzer.initialize();
+    }
+    return this.tensorFlowAnalyzer;
+  }
+
   private async performLightweightScan(mediaUrl: string, mediaElement: HTMLElement): Promise<ScanResult> {
-    console.log('🔬 [LIGHTWEIGHT] Starting SoftArmorMetadataEngine scan for:', mediaUrl);
+    console.log('🔬 [LIGHTWEIGHT] Starting enhanced scan for:', mediaUrl);
     
     try {
-      // Use our revolutionary custom metadata engine
+      // Phase 1: Metadata engine scan
       const engineResult = await this.metadataEngine.scanMedia(mediaUrl);
+      console.log('📊 [METADATA] Raw engine result:', engineResult);
       
-      console.log('📊 [LIGHTWEIGHT] Raw engine result:', engineResult);
+      // Phase 2: TensorFlow AI analysis (if mediaElement is image/video)
+      let aiAnalysis: AIAnalysisResult | null = null;
+      if (mediaElement && (mediaElement.tagName === 'IMG' || mediaElement.tagName === 'VIDEO')) {
+        try {
+          console.log('🧠 [AI] Starting TensorFlow analysis...');
+          const tensorFlow = await this.getTensorFlowAnalyzer();
+          
+          if (mediaElement.tagName === 'IMG') {
+            aiAnalysis = await tensorFlow.analyzeImage(mediaElement as HTMLImageElement);
+          } else if (mediaElement.tagName === 'VIDEO') {
+            aiAnalysis = await tensorFlow.analyzeVideo(mediaElement as HTMLVideoElement);
+          }
+          
+          console.log('🧠 [AI] TensorFlow analysis complete:', aiAnalysis);
+        } catch (aiError) {
+          console.warn('⚠️ [AI] TensorFlow analysis failed, continuing without:', aiError);
+        }
+      }
       
-      // Convert metadata engine result to ScanResult format
-      const riskLevel: RiskLevel = 
+      // Combine results from metadata engine and AI analysis
+      const metadataRiskLevel: RiskLevel = 
         engineResult.verdict === 'safe' ? 'safe' :
         engineResult.verdict === 'danger' ? 'danger' : 'warning';
+      
+      // Calculate enhanced risk level considering AI analysis
+      let finalRiskLevel = metadataRiskLevel;
+      let emotionScore = metadataRiskLevel === 'danger' ? 8 : metadataRiskLevel === 'warning' ? 5 : 2;
+      
+      if (aiAnalysis) {
+        // AI analysis influences final risk assessment
+        emotionScore = Math.round(aiAnalysis.emotionScore * 10);
+        
+        if (aiAnalysis.emotionScore > 0.7 || aiAnalysis.syntheticProbability > 0.6) {
+          finalRiskLevel = 'danger';
+        } else if (aiAnalysis.emotionScore > 0.4 || aiAnalysis.syntheticProbability > 0.3) {
+          finalRiskLevel = finalRiskLevel === 'safe' ? 'warning' : finalRiskLevel;
+        }
+      }
       
       const result: ScanResult = {
         c2paValid: engineResult.details?.headers?.hasC2PA || 
                   engineResult.details?.file?.hasC2PAManifest || false,
-        hasLoopArtifacts: false, // Metadata engine doesn't check loops
-        emotionScore: riskLevel === 'danger' ? 8 : riskLevel === 'warning' ? 5 : 2,
-        riskLevel: riskLevel,
+        hasLoopArtifacts: false, // Will be enhanced in next phase
+        emotionScore: emotionScore,
+        riskLevel: finalRiskLevel,
         timestamp: new Date().toISOString(),
         mediaType: mediaUrl.includes('.mp4') || mediaUrl.includes('.webm') ? 'video' : 'image',
         c2paDetails: {
@@ -368,12 +412,21 @@ class SoftArmorScanner {
                   engineResult.details?.file?.hasC2PAManifest || false,
           validationStatus: 'verified',
           confidenceScore: Math.round(engineResult.confidence * 100),
-          trustLevel: riskLevel === 'safe' ? 'high' : riskLevel === 'warning' ? 'medium' : 'low'
+          trustLevel: finalRiskLevel === 'safe' ? 'high' : finalRiskLevel === 'warning' ? 'medium' : 'low'
         },
-        confidence: engineResult.confidence
+        confidence: aiAnalysis ? 
+          Math.min(engineResult.confidence + (aiAnalysis.confidence * 0.3), 1.0) : 
+          engineResult.confidence,
+        // Add AI analysis results to the scan result
+        aiAnalysis: aiAnalysis ? {
+          emotionScore: aiAnalysis.emotionScore,
+          syntheticProbability: aiAnalysis.syntheticProbability,
+          manipulationIndicators: aiAnalysis.manipulationIndicators,
+          processingTime: aiAnalysis.processingTime
+        } : undefined
       };
       
-      console.log('✅ [LIGHTWEIGHT] Converted result:', result);
+      console.log('✅ [ENHANCED] Final scan result:', result);
       return result;
       
     } catch (error) {
