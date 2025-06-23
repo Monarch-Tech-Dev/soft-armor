@@ -33,7 +33,28 @@ Soft-Armor Extension Architecture
 
 ---
 
-## 📊 **Current Status: Phase 3 - Advanced Detection Engine**
+## 📊 **Current Status: Phase 4 - AI Analysis Engine (80% Complete)**
+
+### 💼 **Business Model: Open Core Architecture**
+
+**🆓 Open Source (Public Repository):**
+- Core C2PA verification engine
+- OpenCV.js loop detection
+- Basic UI and context menu
+- Local scanning capabilities
+- Community contributions welcome
+
+**💰 Premium Services (Private Cloud APIs):**
+- Reverse image search APIs
+- Advanced AI models (premium TensorFlow.js weights)
+- Community verification pods
+- Usage analytics and reporting
+- Priority support and SLA
+
+**🎯 Revenue Tiers:**
+- **Free:** Local scanning only (privacy-first)
+- **Premium:** Cloud features, advanced detection, API access
+- **Enterprise:** White-label, custom integrations, dedicated support
 
 ### ✅ **COMPLETED (Phase 1)**
 - [x] **Extension Framework** - Manifest V3, TypeScript + Vite build system
@@ -77,39 +98,52 @@ Soft-Armor Extension Architecture
   - ✅ Enhanced UI with detailed results
   - ✅ Performance monitoring and optimization
 
-### 🔄 **IN PROGRESS (Phase 4)**
+### 🔄 **IN PROGRESS (Phase 4: AI Analysis Engine)**
 
-#### **Phase 4: AI Analysis Engine (Current Focus)**
-- [ ] **TensorFlow.js Integration**
-  - [ ] Emotion manipulation scoring
-  - [ ] Synthetic content detection
+**🎯 Current Development Focus:**
+- [ ] **TensorFlow.js Integration (Open Source Tier)**
+  - [ ] Basic emotion manipulation scoring
+  - [ ] Synthetic content detection (lightweight models)
   - [ ] Model loading optimization
-  - [ ] Offline inference
+  - [ ] Offline inference capability
 
-- [ ] **Advanced UI Features**
-  - [ ] Progressive disclosure
+- [ ] **Enhanced User Interface**
+  - [ ] Progressive disclosure system
   - [ ] Detailed scan reports
-  - [ ] User education tooltips
-  - [ ] Accessibility enhancements
+  - [ ] Educational tooltips and guidance
+  - [ ] WCAG AA accessibility compliance
 
-#### **Phase 5: Cloud & Premium Features (6-8 weeks)**
-- [ ] **API Integration**
-  - [ ] Reverse image search
-  - [ ] Cloud processing endpoints
-  - [ ] Rate limiting and caching
-  - [ ] Error handling and fallbacks
+**🏗️ Architecture Preparation:**
+- [ ] Premium API integration points
+- [ ] Authentication system framework
+- [ ] Feature gating infrastructure
 
-- [ ] **Billing & Subscription**
-  - [ ] Stripe integration
-  - [ ] Usage tracking
-  - [ ] Feature gating
-  - [ ] User dashboard
+#### **Phase 5: Premium Cloud Services (4-6 weeks)**
 
-- [ ] **Community Features**
-  - [ ] Verification pods
-  - [ ] Peer review system
-  - [ ] Reputation scoring
-  - [ ] Educational content
+**💰 Premium API Development (Private Repository):**
+- [ ] **Cloud Detection Services**
+  - [ ] Reverse image search API
+  - [ ] Advanced AI model endpoints
+  - [ ] High-accuracy video analysis
+  - [ ] Bulk processing capabilities
+
+- [ ] **Business Infrastructure**
+  - [ ] Stripe billing integration
+  - [ ] Usage tracking and analytics
+  - [ ] Feature gating system
+  - [ ] Customer dashboard
+
+- [ ] **Community Premium Features**
+  - [ ] Verification pod network
+  - [ ] Expert review system
+  - [ ] Reputation and trust scoring
+  - [ ] Premium educational content
+
+**🔧 Integration Layer (Open Source):**
+- [ ] Premium API client framework
+- [ ] Authentication token management
+- [ ] Graceful premium feature degradation
+- [ ] Usage analytics (privacy-compliant)
 
 ---
 

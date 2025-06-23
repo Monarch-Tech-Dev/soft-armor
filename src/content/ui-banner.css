@@ -1,0 +1,377 @@
+/* ================================
+   🎨 Soft-Armor UI Banner System
+   Traffic-light color system for scan results
+   ================================ */
+
+.sa-banner {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 400px;
+  min-width: 300px;
+  z-index: 100000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  animation: sa-banner-slide-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.3s ease;
+}
+
+/* Traffic Light Color System */
+.sa-banner.sa-safe {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #10b981;
+  color: white;
+}
+
+.sa-banner.sa-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-color: #f59e0b;
+  color: white;
+}
+
+.sa-banner.sa-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: #ef4444;
+  color: white;
+}
+
+.sa-banner.sa-progress {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* Banner Content */
+.sa-content {
+  padding: 16px 20px;
+  position: relative;
+}
+
+.sa-message {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Details Section */
+.sa-details-wrapper {
+  margin-top: 12px;
+}
+
+.sa-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.sa-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sa-details {
+  margin-top: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.sa-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.sa-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.sa-stat span:first-child {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.sa-stat span:last-child {
+  font-weight: 600;
+}
+
+/* C2PA Details */
+.sa-c2pa-details {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.sa-c2pa-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.sa-c2pa-item {
+  margin: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.9;
+}
+
+.sa-c2pa-warnings,
+.sa-c2pa-errors {
+  margin-top: 6px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.sa-c2pa-warnings-title,
+.sa-c2pa-errors-title {
+  font-weight: 600;
+  font-size: 11px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.sa-c2pa-warning,
+.sa-c2pa-error {
+  font-size: 11px;
+  margin: 2px 0;
+  opacity: 0.85;
+}
+
+/* Progress Bar */
+.sa-progress-container {
+  margin-top: 8px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.sa-progress-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sa-progress-text {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* Close Button */
+.sa-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+.sa-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes sa-banner-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes sa-banner-slide-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .sa-banner {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    min-width: 0;
+  }
+  
+  .sa-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .sa-banner {
+    border-width: 2px;
+    backdrop-filter: none;
+  }
+  
+  .sa-banner.sa-safe {
+    background: #059669;
+    border-color: #10b981;
+  }
+  
+  .sa-banner.sa-warning {
+    background: #d97706;
+    border-color: #f59e0b;
+  }
+  
+  .sa-banner.sa-danger {
+    background: #dc2626;
+    border-color: #ef4444;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .sa-banner {
+    animation: none;
+    transition: none;
+  }
+  
+  .sa-progress-bar {
+    transition: none;
+  }
+}
+
+/* Focus Accessibility */
+.sa-toggle:focus,
+.sa-close:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* ================================
+   Spinner System Fixes
+   ================================ */
+
+.soft-armor-loading-overlay .spinner-content {
+  animation: sa-shield-spin 1s linear infinite;
+}
+
+.soft-armor-loading-overlay .shield-icon {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+@keyframes sa-shield-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Enhanced cleanup and fade transitions for all overlays */
+.soft-armor-scanning-overlay,
+.soft-armor-loading-overlay,
+.soft-armor-progress-overlay {
+  transition: opacity 0.3s ease !important;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.soft-armor-scanning-overlay.removing,
+.soft-armor-loading-overlay.removing,
+.soft-armor-progress-overlay.removing {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  animation: fadeOutScale 0.3s ease-out forwards;
+}
+
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+/* Prevent overlays from moving with scroll */
+.soft-armor-loading-overlay {
+  position: absolute !important;
+  will-change: transform;
+  contain: layout style paint;
+  pointer-events: none; /* Prevent interference with page interaction */
+}
+
+/* Fix for floating/stuck overlays */
+.soft-armor-loading-overlay.stuck-overlay {
+  position: fixed !important;
+  z-index: 999999;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+/* Global cleanup styles - remove any stuck elements */
+body.soft-armor-cleaning * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Performance optimizations for scanning overlays */
+.soft-armor-scanning-overlay {
+  will-change: opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Emergency cleanup utility */
+.soft-armor-cleanup-all {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft-Armor Professional Interface - Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 700;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 25px;
+            border-radius: 16px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #a855f7;
+        }
+        .feature-card h3 {
+            color: #4c1d95;
+            margin-top: 0;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-icon {
+            font-size: 1.5em;
+        }
+        .status-complete {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .demo-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #a855f7;
+        }
+        .demo-section h3 {
+            margin-top: 0;
+            color: #4c1d95;
+        }
+        .confidence-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .confidence-bar {
+            background: #e5e7eb;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .confidence-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+        .confidence-high { background: #10b981; }
+        .confidence-medium { background: #f59e0b; }
+        .confidence-low { background: #ef4444; }
+        
+        .badge-demo {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .mini-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid;
+        }
+        .badge-verified {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+        .badge-untrusted {
+            background: #fef3c7;
+            color: #92400e;
+            border-color: #fde68a;
+        }
+        .badge-invalid {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+        .error-examples {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .error-before,
+        .error-after {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .error-before {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        .error-after {
+            background: #dcfce7;
+            border-left: 4px solid #10b981;
+        }
+        .animation-demo {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .demo-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            transform: translateX(30px) translateY(-10px) scale(0.95);
+            opacity: 0;
+            animation: gentle-enter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            margin: 20px 0;
+        }
+        @keyframes gentle-enter {
+            0% {
+                opacity: 0;
+                transform: translateX(30px) translateY(-10px) scale(0.95);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(5px) translateY(-2px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) scale(1);
+            }
+        }
+        .implementation-notes {
+            background: #ede9fe;
+            border: 2px solid #a855f7;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        .implementation-notes h3 {
+            color: #7c3aed;
+            margin-top: 0;
+        }
+        .code-snippet {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="header">
+            <h1>🛡️ Soft-Armor Professional Interface</h1>
+            <p style="font-size: 1.2em; color: #6b7280; margin: 10px 0;">
+                Calming, professional authenticity verification with confidence scoring
+            </p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>
+                    <span class="feature-icon">🎨</span>
+                    Refined Animations
+                    <span class="status-complete">✅ Complete</span>
+                </h3>
+                <p>Gentler transitions using cubic-bezier easing for a calming, professional feel</p>
+                <ul>
+                    <li>Smooth 0.6s transitions with natural curves</li>
+                    <li>Reduced motion support for accessibility</li>
+                    <li>Subtle scale and position animations</li>
+                    <li>Progressive disclosure animations</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="feature-icon">📊</span>
+                    Confidence Percentages
+                    <span class="status-complete">✅ Complete</span>
+                </h3>
+                <p>Intelligent confidence scoring based on validation factors</p>
+                <ul>
+                    <li>0-100% confidence calculation</li>
+                    <li>Visual confidence bars and indicators</li>
+                    <li>Trust level categorization (high/medium/low)</li>
+                    <li>Multi-factor scoring algorithm</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="feature-icon">🔒</span>
+                    Certificate Details
+                    <span class="status-complete">✅ Complete</span>
+                </h3>
+                <p>Professional certificate panel with comprehensive validation info</p>
+                <ul>
+                    <li>Full certificate chain display</li>
+                    <li>Trust assessment visualization</li>
+                    <li>Timestamp and signer information</li>
+                    <li>Interactive certificate exploration</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="feature-icon">💬</span>
+                    User-Friendly Errors
+                    <span class="status-complete">✅ Complete</span>
+                </h3>
+                <p>Technical messages converted to clear, understandable language</p>
+                <ul>
+                    <li>Plain English error explanations</li>
+                    <li>Contextual help and guidance</li>
+                    <li>Severity-based error categorization</li>
+                    <li>Actionable troubleshooting steps</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="feature-icon">🎖️</span>
+                    C2PA Badges
+                    <span class="status-complete">✅ Complete</span>
+                </h3>
+                <p>Elegant authenticity badges that overlay verified content</p>
+                <ul>
+                    <li>Non-intrusive overlay badges</li>
+                    <li>Click-to-expand certificate details</li>
+                    <li>Trust level color coding</li>
+                    <li>Responsive positioning and sizing</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📊 Confidence Score Visualization</h3>
+            <p>Real-time confidence assessment with professional visual indicators:</p>
+            <div class="confidence-demo">
+                <div>
+                    <strong>High Confidence (92%):</strong> Trusted certificate, complete validation
+                    <div class="confidence-bar">
+                        <div class="confidence-fill confidence-high" style="width: 92%;">92%</div>
+                    </div>
+                </div>
+                <div>
+                    <strong>Medium Confidence (67%):</strong> Valid signature, untrusted issuer
+                    <div class="confidence-bar">
+                        <div class="confidence-fill confidence-medium" style="width: 67%;">67%</div>
+                    </div>
+                </div>
+                <div>
+                    <strong>Low Confidence (23%):</strong> Corrupted or invalid signature
+                    <div class="confidence-bar">
+                        <div class="confidence-fill confidence-low" style="width: 23%;">23%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎖️ C2PA Badge Examples</h3>
+            <p>Clean, professional badges that appear on verified content:</p>
+            <div class="badge-demo">
+                <div class="mini-badge badge-verified">
+                    <span>🔒</span>
+                    <span>Verified 94%</span>
+                </div>
+                <div class="mini-badge badge-untrusted">
+                    <span>⚠️</span>
+                    <span>Self-Signed 67%</span>
+                </div>
+                <div class="mini-badge badge-invalid">
+                    <span>❌</span>
+                    <span>Invalid 15%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>💬 Error Message Improvements</h3>
+            <p>Technical jargon transformed into user-friendly explanations:</p>
+            <div class="error-examples">
+                <div class="error-before">
+                    <strong>Before:</strong> "Missing claim generator information"
+                </div>
+                <div class="error-after">
+                    <strong>After:</strong> "The creator information is incomplete"
+                </div>
+                
+                <div class="error-before">
+                    <strong>Before:</strong> "Invalid certificates: CN=Adobe Systems,O=Adobe,C=US"
+                </div>
+                <div class="error-after">
+                    <strong>After:</strong> "The digital certificate has issues"
+                </div>
+                
+                <div class="error-before">
+                    <strong>Before:</strong> "Manifest timestamp is in the future"
+                </div>
+                <div class="error-after">
+                    <strong>After:</strong> "The signature date appears to be incorrect"
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎨 Gentle Animation Example</h3>
+            <p>Smooth, calming transitions that don't startle users:</p>
+            <div class="animation-demo">
+                <div class="demo-banner">
+                    <strong>✅ Content Verified (89% confidence)</strong><br>
+                    <small>Signed by Adobe Systems - Certificate from trusted authority</small>
+                </div>
+                <p><em>Animation uses gentle cubic-bezier curves with multi-stage movement</em></p>
+            </div>
+        </div>
+
+        <div class="implementation-notes">
+            <h3>🛠️ Technical Implementation</h3>
+            <p>The professional interface enhancement includes:</p>
+            
+            <h4>Confidence Scoring Algorithm</h4>
+            <div class="code-snippet">// Multi-factor confidence calculation
+const confidence = calculateConfidenceScore({
+  validationStatus: 'valid',     // 40% weight
+  certificateChain: certs,       // 25% weight  
+  manifestCompleteness: manifest,// 20% weight
+  errorCount: errors.length      // 15% weight
+});</div>
+
+            <h4>Professional UI Components</h4>
+            <ul>
+                <li><strong>Certificate Display:</strong> Comprehensive panel with trust visualization</li>
+                <li><strong>C2PA Badge:</strong> Non-intrusive overlay with click-to-expand details</li>
+                <li><strong>Enhanced Banners:</strong> Gentle animations with confidence indicators</li>
+                <li><strong>Error Translation:</strong> Technical-to-friendly message mapping</li>
+            </ul>
+
+            <h4>Accessibility Features</h4>
+            <ul>
+                <li>Reduced motion support for users with vestibular disorders</li>
+                <li>High contrast mode compatibility</li>
+                <li>Keyboard navigation support</li>
+                <li>Screen reader friendly ARIA labels</li>
+                <li>Focus indicators for all interactive elements</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 12px;">
+            <h3 style="color: #166534; margin-top: 0;">🎉 All Features Complete!</h3>
+            <p style="color: #166534; margin-bottom: 0;">
+                The Soft-Armor extension now provides a professional, calming interface with:
+                <br><strong>Confidence percentages • Certificate details • User-friendly errors • C2PA badges • Gentle animations</strong>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Animate confidence bars on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.confidence-fill');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }, index * 500);
+            });
+        });
+    </script>
+</body>
+</html>

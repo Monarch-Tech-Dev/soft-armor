@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔬 Soft-Armor™ Diagnostic Test Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .panel {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .panel h2 {
+            color: #4c51bf;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-active { background: #10b981; }
+        .status-inactive { background: #ef4444; }
+        .status-warning { background: #f59e0b; }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .test-item {
+            position: relative;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f8fafc;
+        }
+        
+        .test-item:hover {
+            border-color: #4c51bf;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 81, 191, 0.2);
+        }
+        
+        .test-item img, .test-item video {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .test-label {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+        
+        .test-url {
+            font-size: 0.75em;
+            color: #718096;
+            word-break: break-all;
+        }
+        
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+        }
+        
+        .btn-primary {
+            background: #4c51bf;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .console-output {
+            background: #1a202c;
+            color: #68d391;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            padding: 15px;
+            border-radius: 6px;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 15px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .metric-card {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #4c51bf;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            color: #718096;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .diagnostic-tools {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .test-result {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .result-safe { background: #10b981; }
+        .result-warning { background: #f59e0b; }
+        .result-danger { background: #ef4444; }
+        .result-scanning { 
+            background: #3b82f6; 
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .timeline {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.85em;
+        }
+        
+        .timeline-time {
+            color: #718096;
+            font-family: monospace;
+            min-width: 80px;
+        }
+        
+        .timeline-event {
+            margin-left: 10px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔬 Soft-Armor™ Diagnostic Test Suite</h1>
+        <p>Advanced debugging environment for media authenticity verification</p>
+    </div>
+    
+    <div class="dashboard">
+        <!-- Extension Status Panel -->
+        <div class="panel">
+            <h2>🔌 Extension Status</h2>
+            <div id="extensionStatus">
+                <span class="status-indicator status-inactive"></span>
+                <span>Detecting extension...</span>
+            </div>
+            
+            <div class="control-panel">
+                <button class="btn btn-primary" onclick="detectExtension()">🔍 Detect Extension</button>
+                <button class="btn btn-success" onclick="testBasicFunctionality()">✅ Test Basic</button>
+                <button class="btn btn-warning" onclick="stressTest()">⚡ Stress Test</button>
+                <button class="btn btn-danger" onclick="clearAllTests()">🧹 Clear All</button>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalScans">0</div>
+                    <div class="metric-label">Total Scans</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="successRate">0%</div>
+                    <div class="metric-label">Success Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="avgScanTime">0ms</div>
+                    <div class="metric-label">Avg Scan Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="activeScans">0</div>
+                    <div class="metric-label">Active Scans</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Live Console Panel -->
+        <div class="panel">
+            <h2>📟 Live Debug Console</h2>
+            <div class="diagnostic-tools">
+                <button class="btn btn-primary" onclick="enableVerboseLogging()">🔊 Verbose Mode</button>
+                <button class="btn btn-warning" onclick="capturePerformance()">📊 Performance</button>
+                <button class="btn btn-success" onclick="exportLogs()">💾 Export Logs</button>
+                <button class="btn btn-danger" onclick="clearConsole()">🗑️ Clear</button>
+            </div>
+            <div id="consoleOutput" class="console-output">Initializing diagnostic console...\n</div>
+        </div>
+        
+        <!-- Test Media Grid -->
+        <div class="panel full-width">
+            <h2>🎯 Test Media Collection</h2>
+            <div class="control-panel">
+                <button class="btn btn-primary" onclick="scanAll()">🚀 Scan All Media</button>
+                <button class="btn btn-success" onclick="scanVisible()">👁️ Scan Visible</button>
+                <button class="btn btn-warning" onclick="simulateCORSError()">⚠️ Test CORS Error</button>
+                <button class="btn btn-danger" onclick="simulateTimeout()">⏰ Test Timeout</button>
+            </div>
+            
+            <div class="test-grid" id="testGrid">
+                <!-- Test images will be generated here -->
+            </div>
+        </div>
+        
+        <!-- Timeline Panel -->
+        <div class="panel">
+            <h2>📈 Scan Timeline</h2>
+            <div id="timeline" class="timeline">
+                <!-- Timeline events will appear here -->
+            </div>
+        </div>
+        
+        <!-- Performance Panel -->
+        <div class="panel">
+            <h2>⚡ Performance Metrics</h2>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+            <div class="diagnostic-tools">
+                <button class="btn btn-primary" onclick="startPerformanceMonitor()">📊 Start Monitor</button>
+                <button class="btn btn-warning" onclick="memoryProfile()">🧠 Memory Profile</button>
+                <button class="btn btn-success" onclick="networkAnalysis()">🌐 Network Analysis</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔬 Enhanced Diagnostic Test Suite
+        class SoftArmorDiagnostics {
+            constructor() {
+                this.extensionDetected = false;
+                this.verboseMode = false;
+                this.scanResults = [];
+                this.performanceData = [];
+                this.timelineEvents = [];
+                this.activeScans = new Set();
+                
+                this.initializeConsole();
+                this.setupMessageListeners();
+                this.generateTestMedia();
+                this.detectExtension();
+                this.startPerformanceMonitoring();
+            }
+            
+            initializeConsole() {
+                // Intercept console.log for the diagnostic output
+                const originalLog = console.log;
+                console.log = (...args) => {
+                    originalLog.apply(console, args);
+                    this.logToConsole('[LOG]', args.join(' '), '#68d391');
+                };
+                
+                const originalError = console.error;
+                console.error = (...args) => {
+                    originalError.apply(console, args);
+                    this.logToConsole('[ERROR]', args.join(' '), '#f56565');
+                };
+                
+                const originalWarn = console.warn;
+                console.warn = (...args) => {
+                    originalWarn.apply(console, args);
+                    this.logToConsole('[WARN]', args.join(' '), '#ed8936');
+                };
+                
+                this.logToConsole('[SYSTEM]', 'Diagnostic console initialized', '#9f7aea');
+            }
+            
+            logToConsole(prefix, message, color = '#68d391') {
+                const consoleOutput = document.getElementById('consoleOutput');
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = `[${timestamp}] ${prefix} ${message}\n`;
+                consoleOutput.textContent += logEntry;
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                
+                // Add to timeline
+                this.addTimelineEvent(prefix.replace(/[\[\]]/g, ''), message);
+            }
+            
+            addTimelineEvent(type, message) {
+                const timeline = document.getElementById('timeline');
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                const time = document.createElement('span');
+                time.className = 'timeline-time';
+                time.textContent = new Date().toLocaleTimeString();
+                
+                const event = document.createElement('span');
+                event.className = 'timeline-event';
+                event.textContent = `${type}: ${message}`;
+                
+                timelineItem.appendChild(time);
+                timelineItem.appendChild(event);
+                timeline.insertBefore(timelineItem, timeline.firstChild);
+                
+                // Keep only last 20 events
+                while (timeline.children.length > 20) {
+                    timeline.removeChild(timeline.lastChild);
+                }
+            }
+            
+            setupMessageListeners() {
+                window.addEventListener('message', (event) => {
+                    if (event.data.type === 'SOFT_ARMOR_SCAN') {
+                        this.logToConsole('[SCAN]', `Scan initiated for: ${event.data.mediaUrl}`, '#4299e1');
+                    }
+                });
+                
+                // Listen for extension responses
+                document.addEventListener('soft-armor-result', (event) => {
+                    this.handleScanResult(event.detail);
+                });
+            }
+            
+            generateTestMedia() {
+                const testGrid = document.getElementById('testGrid');
+                const testCases = [
+                    {
+                        type: 'image',
+                        url: 'https://picsum.photos/300/200?random=1',
+                        label: 'Random Image #1',
+                        expectedRisk: 'safe'
+                    },
+                    {
+                        type: 'image', 
+                        url: 'https://picsum.photos/300/200?random=2',
+                        label: 'Random Image #2',
+                        expectedRisk: 'safe'
+                    },
+                    {
+                        type: 'image',
+                        url: 'https://via.placeholder.com/300x200/ff0000/ffffff?text=FAKE',
+                        label: 'Placeholder (Suspicious)',
+                        expectedRisk: 'warning'
+                    },
+                    {
+                        type: 'image',
+                        url: 'https://httpbin.org/image/jpeg',
+                        label: 'HTTPBin JPEG',
+                        expectedRisk: 'safe'
+                    },
+                    {
+                        type: 'image',
+                        url: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                        label: 'Base64 Data URI',
+                        expectedRisk: 'warning'
+                    },
+                    {
+                        type: 'image',
+                        url: 'https://example.com/nonexistent.jpg',
+                        label: 'Broken Image (404)',
+                        expectedRisk: 'danger'
+                    },
+                    {
+                        type: 'video',
+                        url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                        label: 'Sample Video',
+                        expectedRisk: 'safe'
+                    },
+                    {
+                        type: 'image',
+                        url: 'https://tempimg.com/fake-generated-image.jpg',
+                        label: 'Temp Domain (Suspicious)',
+                        expectedRisk: 'danger'
+                    }
+                ];
+                
+                testCases.forEach((testCase, index) => {
+                    const testItem = document.createElement('div');
+                    testItem.className = 'test-item';
+                    testItem.id = `test-item-${index}`;
+                    
+                    const media = document.createElement(testCase.type);
+                    media.src = testCase.url;
+                    media.alt = testCase.label;
+                    media.className = 'test-media';
+                    media.dataset.testType = testCase.expectedRisk;
+                    
+                    if (testCase.type === 'video') {
+                        media.controls = true;
+                        media.muted = true;
+                    }
+                    
+                    const label = document.createElement('div');
+                    label.className = 'test-label';
+                    label.textContent = testCase.label;
+                    
+                    const url = document.createElement('div');
+                    url.className = 'test-url';
+                    url.textContent = testCase.url;
+                    
+                    const resultIndicator = document.createElement('div');
+                    resultIndicator.className = 'test-result';
+                    resultIndicator.id = `result-${index}`;
+                    
+                    testItem.appendChild(media);
+                    testItem.appendChild(label);
+                    testItem.appendChild(url);
+                    testItem.appendChild(resultIndicator);
+                    
+                    // Add click handler for individual scanning
+                    testItem.onclick = () => this.scanMediaItem(media, index);
+                    
+                    testGrid.appendChild(testItem);
+                });
+            }
+            
+            async detectExtension() {
+                this.logToConsole('[DETECT]', 'Detecting Soft-Armor extension...', '#9f7aea');
+                
+                // Check if extension context menu is available
+                const testImage = document.querySelector('.test-media');
+                if (testImage) {
+                    // Trigger a test scan
+                    window.postMessage({
+                        type: 'SOFT_ARMOR_SCAN',
+                        mediaUrl: 'https://picsum.photos/300/200?random=999',
+                        scanType: 'quick',
+                        timestamp: Date.now(),
+                        showProgress: true
+                    }, '*');
+                    
+                    // Wait a bit and check for response
+                    setTimeout(() => {
+                        const hasExtension = document.querySelector('[data-soft-armor-enhanced]');
+                        this.extensionDetected = !!hasExtension;
+                        this.updateExtensionStatus();
+                    }, 1000);
+                }
+            }
+            
+            updateExtensionStatus() {
+                const statusElement = document.getElementById('extensionStatus');
+                const indicator = statusElement.querySelector('.status-indicator');
+                const text = statusElement.querySelector('span:last-child');
+                
+                if (this.extensionDetected) {
+                    indicator.className = 'status-indicator status-active';
+                    text.textContent = 'Extension detected and active';
+                    this.logToConsole('[SUCCESS]', 'Soft-Armor extension is active', '#48bb78');
+                } else {
+                    indicator.className = 'status-indicator status-inactive';
+                    text.textContent = 'Extension not detected';
+                    this.logToConsole('[ERROR]', 'Soft-Armor extension not found', '#f56565');
+                }
+            }
+            
+            async scanMediaItem(mediaElement, index) {
+                const startTime = performance.now();
+                this.activeScans.add(index);
+                this.updateMetrics();
+                
+                this.logToConsole('[SCAN]', `Starting scan for item ${index}: ${mediaElement.src}`, '#4299e1');
+                
+                // Update UI to show scanning
+                const resultIndicator = document.getElementById(`result-${index}`);
+                resultIndicator.className = 'test-result result-scanning';
+                resultIndicator.textContent = '⏳';
+                
+                try {
+                    // Trigger scan via message
+                    window.postMessage({
+                        type: 'SOFT_ARMOR_SCAN',
+                        mediaUrl: mediaElement.src,
+                        scanType: this.verboseMode ? 'deep' : 'quick',
+                        timestamp: Date.now(),
+                        showProgress: true,
+                        testIndex: index
+                    }, '*');
+                    
+                    // Set timeout for scan completion detection
+                    setTimeout(() => {
+                        if (this.activeScans.has(index)) {
+                            this.handleScanTimeout(index, startTime);
+                        }
+                    }, 5000);
+                    
+                } catch (error) {
+                    this.handleScanError(index, error, startTime);
+                }
+            }
+            
+            handleScanResult(result) {
+                const { testIndex, riskLevel, scanTime } = result;
+                
+                if (this.activeScans.has(testIndex)) {
+                    this.activeScans.delete(testIndex);
+                    
+                    const resultIndicator = document.getElementById(`result-${testIndex}`);
+                    resultIndicator.className = `test-result result-${riskLevel}`;
+                    resultIndicator.textContent = riskLevel === 'safe' ? '✅' : riskLevel === 'warning' ? '⚠️' : '❌';
+                    
+                    this.scanResults.push({
+                        index: testIndex,
+                        result: riskLevel,
+                        scanTime: scanTime,
+                        timestamp: Date.now()
+                    });
+                    
+                    this.logToConsole('[RESULT]', `Item ${testIndex} scan completed: ${riskLevel} (${scanTime}ms)`, '#48bb78');
+                    this.updateMetrics();
+                }
+            }
+            
+            handleScanTimeout(index, startTime) {
+                this.activeScans.delete(index);
+                const scanTime = performance.now() - startTime;
+                
+                const resultIndicator = document.getElementById(`result-${index}`);
+                resultIndicator.className = 'test-result result-danger';
+                resultIndicator.textContent = '⏰';
+                
+                this.logToConsole('[TIMEOUT]', `Item ${index} scan timed out after ${scanTime.toFixed(0)}ms`, '#f56565');
+                this.updateMetrics();
+            }
+            
+            handleScanError(index, error, startTime) {
+                this.activeScans.delete(index);
+                const scanTime = performance.now() - startTime;
+                
+                const resultIndicator = document.getElementById(`result-${index}`);
+                resultIndicator.className = 'test-result result-danger';
+                resultIndicator.textContent = '❌';
+                
+                this.logToConsole('[ERROR]', `Item ${index} scan failed: ${error.message}`, '#f56565');
+                this.updateMetrics();
+            }
+            
+            updateMetrics() {
+                const totalScans = this.scanResults.length;
+                const successfulScans = this.scanResults.filter(r => r.result !== 'error').length;
+                const successRate = totalScans > 0 ? Math.round((successfulScans / totalScans) * 100) : 0;
+                const avgScanTime = totalScans > 0 ? 
+                    Math.round(this.scanResults.reduce((sum, r) => sum + r.scanTime, 0) / totalScans) : 0;
+                
+                document.getElementById('totalScans').textContent = totalScans;
+                document.getElementById('successRate').textContent = `${successRate}%`;
+                document.getElementById('avgScanTime').textContent = `${avgScanTime}ms`;
+                document.getElementById('activeScans').textContent = this.activeScans.size;
+            }
+            
+            startPerformanceMonitoring() {
+                setInterval(() => {
+                    const memoryInfo = performance.memory || {};
+                    const timing = performance.timing;
+                    
+                    this.performanceData.push({
+                        timestamp: Date.now(),
+                        memory: {
+                            used: memoryInfo.usedJSHeapSize || 0,
+                            total: memoryInfo.totalJSHeapSize || 0,
+                            limit: memoryInfo.jsHeapSizeLimit || 0
+                        },
+                        activeScans: this.activeScans.size
+                    });
+                    
+                    // Keep only last 60 data points
+                    if (this.performanceData.length > 60) {
+                        this.performanceData.shift();
+                    }
+                    
+                    this.updatePerformanceChart();
+                }, 1000);
+            }
+            
+            updatePerformanceChart() {
+                const canvas = document.getElementById('performanceChart');
+                const ctx = canvas.getContext('2d');
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (this.performanceData.length < 2) return;
+                
+                const maxMemory = Math.max(...this.performanceData.map(d => d.memory.used));
+                const maxScans = Math.max(5, Math.max(...this.performanceData.map(d => d.activeScans)));
+                
+                // Draw memory usage
+                ctx.strokeStyle = '#4299e1';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                this.performanceData.forEach((data, index) => {
+                    const x = (index / (this.performanceData.length - 1)) * canvas.width;
+                    const y = canvas.height - (data.memory.used / maxMemory) * canvas.height * 0.8;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                ctx.stroke();
+                
+                // Draw active scans
+                ctx.strokeStyle = '#f56565';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                this.performanceData.forEach((data, index) => {
+                    const x = (index / (this.performanceData.length - 1)) * canvas.width;
+                    const y = canvas.height - (data.activeScans / maxScans) * canvas.height * 0.8;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                ctx.stroke();
+            }
+        }
+        
+        // Global diagnostic instance
+        let diagnostics;
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            diagnostics = new SoftArmorDiagnostics();
+        });
+        
+        // Global functions for buttons
+        function detectExtension() {
+            diagnostics.detectExtension();
+        }
+        
+        function testBasicFunctionality() {
+            diagnostics.logToConsole('[TEST]', 'Starting basic functionality test...', '#9f7aea');
+            const firstMedia = document.querySelector('.test-media');
+            if (firstMedia) {
+                diagnostics.scanMediaItem(firstMedia, 0);
+            }
+        }
+        
+        function stressTest() {
+            diagnostics.logToConsole('[STRESS]', 'Starting stress test - scanning all media rapidly...', '#ed8936');
+            const allMedia = document.querySelectorAll('.test-media');
+            allMedia.forEach((media, index) => {
+                setTimeout(() => {
+                    diagnostics.scanMediaItem(media, index);
+                }, index * 200); // Stagger scans by 200ms
+            });
+        }
+        
+        function clearAllTests() {
+            diagnostics.scanResults = [];
+            diagnostics.activeScans.clear();
+            diagnostics.updateMetrics();
+            
+            // Reset all result indicators
+            document.querySelectorAll('.test-result').forEach(indicator => {
+                indicator.className = 'test-result';
+                indicator.textContent = '';
+            });
+            
+            diagnostics.logToConsole('[CLEAR]', 'All test results cleared', '#9f7aea');
+        }
+        
+        function enableVerboseLogging() {
+            diagnostics.verboseMode = !diagnostics.verboseMode;
+            const btn = event.target;
+            btn.textContent = diagnostics.verboseMode ? '🔇 Normal Mode' : '🔊 Verbose Mode';
+            btn.className = diagnostics.verboseMode ? 'btn btn-warning' : 'btn btn-primary';
+            
+            diagnostics.logToConsole('[MODE]', `Verbose logging ${diagnostics.verboseMode ? 'enabled' : 'disabled'}`, '#9f7aea');
+        }
+        
+        function capturePerformance() {
+            const perfData = {
+                memory: performance.memory || {},
+                timing: performance.timing,
+                navigation: performance.navigation,
+                activeScans: diagnostics.activeScans.size,
+                scanResults: diagnostics.scanResults.length
+            };
+            
+            diagnostics.logToConsole('[PERF]', JSON.stringify(perfData, null, 2), '#4299e1');
+        }
+        
+        function exportLogs() {
+            const logs = document.getElementById('consoleOutput').textContent;
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `soft-armor-diagnostic-${new Date().toISOString()}.log`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+            diagnostics.logToConsole('[EXPORT]', 'Diagnostic logs exported', '#48bb78');
+        }
+        
+        function clearConsole() {
+            document.getElementById('consoleOutput').textContent = '';
+            diagnostics.logToConsole('[SYSTEM]', 'Console cleared', '#9f7aea');
+        }
+        
+        function scanAll() {
+            diagnostics.logToConsole('[BATCH]', 'Starting batch scan of all media items...', '#4299e1');
+            const allMedia = document.querySelectorAll('.test-media');
+            allMedia.forEach((media, index) => {
+                setTimeout(() => {
+                    diagnostics.scanMediaItem(media, index);
+                }, index * 500); // Stagger by 500ms for better observation
+            });
+        }
+        
+        function scanVisible() {
+            diagnostics.logToConsole('[VISIBLE]', 'Scanning only visible media items...', '#4299e1');
+            const allMedia = document.querySelectorAll('.test-media');
+            allMedia.forEach((media, index) => {
+                const rect = media.getBoundingClientRect();
+                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    diagnostics.scanMediaItem(media, index);
+                }
+            });
+        }
+        
+        function simulateCORSError() {
+            diagnostics.logToConsole('[SIMULATE]', 'Simulating CORS error scenario...', '#ed8936');
+            // Add a media item with CORS-blocked URL
+            const corsUrl = 'https://cors-blocked-example.com/image.jpg';
+            const testMedia = document.createElement('img');
+            testMedia.src = corsUrl;
+            testMedia.className = 'test-media';
+            diagnostics.scanMediaItem(testMedia, 999);
+        }
+        
+        function simulateTimeout() {
+            diagnostics.logToConsole('[SIMULATE]', 'Simulating timeout scenario...', '#ed8936');
+            // Trigger a scan with a very slow/non-responsive URL
+            const timeoutUrl = 'https://httpbin.org/delay/10';
+            const testMedia = document.createElement('img');
+            testMedia.src = timeoutUrl;
+            testMedia.className = 'test-media';
+            diagnostics.scanMediaItem(testMedia, 998);
+        }
+        
+        function startPerformanceMonitor() {
+            diagnostics.logToConsole('[MONITOR]', 'Performance monitoring is running continuously', '#4299e1');
+        }
+        
+        function memoryProfile() {
+            if (performance.memory) {
+                const memory = performance.memory;
+                const memoryData = {
+                    used: `${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)} MB`,
+                    total: `${(memory.totalJSHeapSize / 1024 / 1024).toFixed(2)} MB`,
+                    limit: `${(memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)} MB`
+                };
+                diagnostics.logToConsole('[MEMORY]', JSON.stringify(memoryData, null, 2), '#9f7aea');
+            } else {
+                diagnostics.logToConsole('[MEMORY]', 'Memory profiling not available in this browser', '#ed8936');
+            }
+        }
+        
+        function networkAnalysis() {
+            const networkInfo = {
+                connection: navigator.connection || {},
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                cookieEnabled: navigator.cookieEnabled,
+                onLine: navigator.onLine
+            };
+            diagnostics.logToConsole('[NETWORK]', JSON.stringify(networkInfo, null, 2), '#4299e1');
+        }
+    </script>
+</body>
+</html>

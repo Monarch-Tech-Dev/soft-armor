@@ -1,0 +1,12 @@
+{
+  "name": "Soft-Armor Test",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Test extension",
+  
+  "permissions": ["contextMenus"],
+  
+  "background": {
+    "service_worker": "background.js"
+  }
+}

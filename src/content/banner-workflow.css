@@ -1,0 +1,445 @@
+/* ================================
+   Banner Workflow System
+   Core User Journey Styling
+   ================================ */
+
+/* ================================
+   BANNER WORKFLOW FOUNDATION
+   ================================ */
+
+.soft-armor-journey-banner {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  max-width: 400px;
+  min-width: 320px;
+  z-index: var(--z-notification);
+  font-family: var(--font-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: soft-armor-banner-gentle-enter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================
+   BANNER TYPE VARIATIONS
+   ================================ */
+
+/* Onboarding banners */
+.soft-armor-journey-banner--onboarding {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.95) 0%,
+    rgba(37, 99, 235, 0.95) 100%
+  );
+  border-color: var(--color-link);
+  color: white;
+}
+
+/* Scanning progress banners */
+.soft-armor-journey-banner--scanning {
+  background: linear-gradient(135deg,
+    rgba(16, 185, 129, 0.95) 0%,
+    rgba(5, 150, 105, 0.95) 100%
+  );
+  border-color: var(--color-safe-green);
+  color: white;
+}
+
+/* Result banners */
+.soft-armor-journey-banner--result-safe {
+  background: linear-gradient(135deg,
+    var(--color-safe-green) 0%,
+    var(--color-safe-green-hover) 100%
+  );
+  border-color: var(--color-safe-green-hover);
+  color: white;
+}
+
+.soft-armor-journey-banner--result-warning {
+  background: linear-gradient(135deg,
+    var(--color-warning-amber) 0%,
+    var(--color-warning-amber-hover) 100%
+  );
+  border-color: var(--color-warning-amber-hover);
+  color: white;
+}
+
+.soft-armor-journey-banner--result-danger {
+  background: linear-gradient(135deg,
+    var(--color-danger-red) 0%,
+    var(--color-danger-red-hover) 100%
+  );
+  border-color: var(--color-danger-red-hover);
+  color: white;
+}
+
+/* Error banners */
+.soft-armor-journey-banner--error {
+  background: linear-gradient(135deg,
+    rgba(239, 68, 68, 0.95) 0%,
+    rgba(220, 38, 38, 0.95) 100%
+  );
+  border-color: var(--color-danger-red);
+  color: white;
+}
+
+/* Help banners */
+.soft-armor-journey-banner--help {
+  background: linear-gradient(135deg,
+    rgba(100, 116, 139, 0.95) 0%,
+    rgba(71, 85, 105, 0.95) 100%
+  );
+  border-color: var(--color-secondary);
+  color: white;
+}
+
+/* ================================
+   BANNER STRUCTURE
+   ================================ */
+
+.soft-armor-banner-header {
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.soft-armor-banner-icon {
+  font-size: var(--text-xl);
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.soft-armor-banner-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-tight);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.soft-armor-banner-content {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.soft-armor-banner-message {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-3);
+  opacity: 0.95;
+}
+
+/* ================================
+   PROGRESS INDICATORS
+   ================================ */
+
+.soft-armor-progress-container {
+  margin: var(--space-3) 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  height: 6px;
+  overflow: hidden;
+}
+
+.soft-armor-progress-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-full);
+  transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.soft-armor-scanning-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  opacity: 0.9;
+}
+
+.soft-armor-scanning-dots {
+  display: flex;
+  gap: 2px;
+}
+
+.soft-armor-scanning-dots span {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: var(--radius-full);
+  animation: soft-armor-gentle-pulse 2s ease-in-out infinite;
+}
+
+.soft-armor-scanning-dots span:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.soft-armor-scanning-dots span:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* ================================
+   ACTION BUTTONS
+   ================================ */
+
+.soft-armor-banner-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.soft-armor-action-button {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: currentColor;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.soft-armor-action-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-0.5px) scale(1.02);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+.soft-armor-action-button:active {
+  transform: translateY(0);
+}
+
+.soft-armor-action-button--primary {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  font-weight: var(--font-weight-semibold);
+}
+
+.soft-armor-action-button--primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Keyboard shortcut indicators */
+.soft-armor-shortcut-hint {
+  font-size: var(--text-xs);
+  opacity: 0.7;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1px var(--space-1);
+  border-radius: var(--radius-sm);
+  margin-left: auto;
+}
+
+/* ================================
+   CLOSE BUTTON
+   ================================ */
+
+.soft-armor-banner-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: var(--space-6);
+  height: var(--space-6);
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: currentColor;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  line-height: 1;
+  transition: all var(--duration-fast) var(--ease-out);
+  backdrop-filter: blur(4px);
+}
+
+.soft-armor-banner-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.soft-armor-banner-close:active {
+  transform: scale(0.95);
+}
+
+/* ================================
+   WORKFLOW ANIMATIONS
+   ================================ */
+
+@keyframes soft-armor-banner-gentle-enter {
+  0% {
+    opacity: 0;
+    transform: translateX(30px) translateY(-10px) scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(5px) translateY(-2px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes soft-armor-banner-gentle-exit {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(15px) translateY(-5px) scale(0.98);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30px) translateY(-10px) scale(0.95);
+  }
+}
+
+@keyframes soft-armor-gentle-pulse {
+  0%, 70%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  35% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+
+/* Auto-hide animation */
+.soft-armor-journey-banner--auto-hiding {
+  animation: soft-armor-banner-gentle-exit 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* ================================
+   MOBILE RESPONSIVENESS
+   ================================ */
+
+@media (max-width: 480px) {
+  .soft-armor-journey-banner {
+    top: var(--space-2);
+    right: var(--space-2);
+    left: var(--space-2);
+    max-width: none;
+    min-width: 0;
+  }
+
+  .soft-armor-banner-header {
+    padding: var(--space-3);
+  }
+
+  .soft-armor-banner-content {
+    padding: 0 var(--space-3) var(--space-3);
+  }
+
+  .soft-armor-banner-actions {
+    flex-direction: column;
+  }
+
+  .soft-armor-action-button {
+    justify-content: center;
+  }
+}
+
+/* ================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================ */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .soft-armor-journey-banner {
+    border-width: 2px;
+    backdrop-filter: none;
+  }
+
+  .soft-armor-journey-banner--onboarding {
+    background: #0052cc;
+    border-color: #0052cc;
+  }
+
+  .soft-armor-journey-banner--scanning {
+    background: #006600;
+    border-color: #006600;
+  }
+
+  .soft-armor-journey-banner--error {
+    background: #cc0000;
+    border-color: #cc0000;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .soft-armor-journey-banner {
+    animation: none;
+  }
+
+  .soft-armor-banner-slide-in,
+  .soft-armor-banner-slide-out,
+  .soft-armor-dot-pulse {
+    animation: none;
+  }
+
+  .soft-armor-action-button:hover {
+    transform: none;
+  }
+
+  .soft-armor-progress-bar {
+    transition: none;
+  }
+}
+
+/* Focus indicators for keyboard navigation */
+.soft-armor-action-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.soft-armor-banner-close:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Screen reader only content */
+.soft-armor-sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ================================
+   STEP TRANSITION EFFECTS
+   ================================ */
+
+.soft-armor-step-transition {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.soft-armor-step-entering {
+  opacity: 0;
+  transform: translateX(10px) scale(0.98);
+}
+
+.soft-armor-step-entered {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.soft-armor-step-exiting {
+  opacity: 0;
+  transform: translateX(-10px) scale(0.98);
+}

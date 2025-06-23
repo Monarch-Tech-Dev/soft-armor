@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TensorFlow.js Integration Test - Soft-Armor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-image {
+            max-width: 300px;
+            max-height: 300px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        
+        .test-results {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status.success {
+            background: #d1edff;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        .test-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧠 TensorFlow.js Integration Test</h1>
+    <p>Testing the AI analysis engine for Soft-Armor extension</p>
+
+    <div class="test-container">
+        <h2>🔧 System Status</h2>
+        <div id="system-status" class="status loading">Initializing TensorFlow.js...</div>
+        <div id="system-info"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>🖼️ Image Analysis Test</h2>
+        <div>
+            <img id="test-image" class="test-image" src="src/assets/fixtures/test-image.jpg" alt="Test Image">
+            <button id="analyze-image" class="test-button" disabled>Analyze Image</button>
+            <button id="load-sample" class="test-button">Load Sample Image</button>
+        </div>
+        
+        <div class="metrics" id="image-metrics" style="display: none;">
+            <div class="metric">
+                <div class="metric-value" id="emotion-score">-</div>
+                <div class="metric-label">Emotion Score</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="synthetic-prob">-</div>
+                <div class="metric-label">Synthetic Probability</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="confidence">-</div>
+                <div class="metric-label">Confidence</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="processing-time">-</div>
+                <div class="metric-label">Processing Time (s)</div>
+            </div>
+        </div>
+        
+        <div id="image-results" class="test-results" style="display: none;"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>🎥 Video Analysis Test</h2>
+        <div>
+            <video id="test-video" class="test-image" controls>
+                <source src="src/assets/fixtures/test-video.mp4" type="video/mp4">
+                Your browser does not support video.
+            </video>
+            <button id="analyze-video" class="test-button" disabled>Analyze Video</button>
+        </div>
+        
+        <div class="metrics" id="video-metrics" style="display: none;">
+            <div class="metric">
+                <div class="metric-value" id="video-emotion-score">-</div>
+                <div class="metric-label">Emotion Score</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="video-synthetic-prob">-</div>
+                <div class="metric-label">Synthetic Probability</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="video-confidence">-</div>
+                <div class="metric-label">Confidence</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="video-processing-time">-</div>
+                <div class="metric-label">Processing Time (s)</div>
+            </div>
+        </div>
+        
+        <div id="video-results" class="test-results" style="display: none;"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 Performance Metrics</h2>
+        <div id="performance-metrics">
+            <p>Run tests to see performance data...</p>
+        </div>
+    </div>
+
+    <!-- Include TensorFlow.js from CDN for testing -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    
+    <script>
+        // Simple test implementation of TensorFlow analyzer
+        class TensorFlowAnalyzerTest {
+            constructor() {
+                this.isInitialized = false;
+                this.model = null;
+            }
+
+            async initialize() {
+                try {
+                    console.log('🧠 Initializing TensorFlow.js...');
+                    
+                    // Set backend
+                    await tf.setBackend('webgl');
+                    await tf.ready();
+                    
+                    console.log(`Backend: ${tf.getBackend()}`);
+                    
+                    // Create a simple test model
+                    this.model = tf.sequential({
+                        layers: [
+                            tf.layers.conv2d({
+                                inputShape: [224, 224, 3],
+                                filters: 32,
+                                kernelSize: 3,
+                                activation: 'relu'
+                            }),
+                            tf.layers.maxPooling2d({ poolSize: 2 }),
+                            tf.layers.conv2d({ filters: 64, kernelSize: 3, activation: 'relu' }),
+                            tf.layers.maxPooling2d({ poolSize: 2 }),
+                            tf.layers.flatten(),
+                            tf.layers.dense({ units: 128, activation: 'relu' }),
+                            tf.layers.dropout({ rate: 0.5 }),
+                            tf.layers.dense({ units: 3, activation: 'softmax' })
+                        ]
+                    });
+                    
+                    this.model.compile({
+                        optimizer: 'adam',
+                        loss: 'categoricalCrossentropy',
+                        metrics: ['accuracy']
+                    });
+                    
+                    this.isInitialized = true;
+                    console.log('✅ TensorFlow.js initialized successfully');
+                    return true;
+                } catch (error) {
+                    console.error('❌ TensorFlow initialization failed:', error);
+                    return false;
+                }
+            }
+
+            async analyzeImage(imageElement) {
+                const startTime = performance.now();
+                
+                try {
+                    if (!this.isInitialized) {
+                        throw new Error('Analyzer not initialized');
+                    }
+
+                    // Preprocess image
+                    const tensor = tf.tidy(() => {
+                        let imageTensor = tf.browser.fromPixels(imageElement);
+                        imageTensor = tf.image.resizeBilinear(imageTensor, [224, 224]);
+                        imageTensor = imageTensor.div(255.0);
+                        imageTensor = imageTensor.expandDims(0);
+                        return imageTensor;
+                    });
+
+                    // Run inference
+                    const prediction = this.model.predict(tensor);
+                    const scores = await prediction.data();
+
+                    // Clean up
+                    tensor.dispose();
+                    prediction.dispose();
+
+                    // Generate mock results for testing
+                    const [neutralScore, positiveScore, manipulativeScore] = Array.from(scores);
+                    
+                    const result = {
+                        emotionScore: manipulativeScore,
+                        syntheticProbability: Math.min(manipulativeScore * 1.2, 1.0),
+                        manipulationIndicators: this.generateIndicators(manipulativeScore),
+                        confidence: Math.max(neutralScore, positiveScore, manipulativeScore),
+                        processingTime: (performance.now() - startTime) / 1000
+                    };
+
+                    return result;
+                } catch (error) {
+                    console.error('Analysis failed:', error);
+                    return {
+                        emotionScore: 0,
+                        syntheticProbability: 0,
+                        manipulationIndicators: ['Analysis failed: ' + error.message],
+                        confidence: 0,
+                        processingTime: (performance.now() - startTime) / 1000
+                    };
+                }
+            }
+
+            generateIndicators(score) {
+                const indicators = [];
+                if (score > 0.7) indicators.push('High manipulation probability detected');
+                if (score > 0.5) indicators.push('Suspicious emotional targeting');
+                if (score < 0.3) indicators.push('Low risk content detected');
+                return indicators;
+            }
+        }
+
+        // Test interface
+        let analyzer = null;
+        let testResults = [];
+
+        async function initializeTests() {
+            const statusEl = document.getElementById('system-status');
+            const infoEl = document.getElementById('system-info');
+            
+            try {
+                statusEl.textContent = 'Initializing TensorFlow.js...';
+                statusEl.className = 'status loading';
+                
+                analyzer = new TensorFlowAnalyzerTest();
+                const success = await analyzer.initialize();
+                
+                if (success) {
+                    statusEl.textContent = '✅ TensorFlow.js ready for testing';
+                    statusEl.className = 'status success';
+                    
+                    infoEl.innerHTML = `
+                        <strong>Backend:</strong> ${tf.getBackend()}<br>
+                        <strong>Version:</strong> ${tf.version.tfjs}<br>
+                        <strong>Memory:</strong> ${JSON.stringify(tf.memory(), null, 2)}
+                    `;
+                    
+                    // Enable test buttons
+                    document.getElementById('analyze-image').disabled = false;
+                    document.getElementById('analyze-video').disabled = false;
+                } else {
+                    throw new Error('Initialization failed');
+                }
+            } catch (error) {
+                statusEl.textContent = '❌ Initialization failed: ' + error.message;
+                statusEl.className = 'status error';
+            }
+        }
+
+        async function testImageAnalysis() {
+            const button = document.getElementById('analyze-image');
+            const resultsEl = document.getElementById('image-results');
+            const metricsEl = document.getElementById('image-metrics');
+            const imageEl = document.getElementById('test-image');
+            
+            try {
+                button.disabled = true;
+                button.textContent = 'Analyzing...';
+                
+                const result = await analyzer.analyzeImage(imageEl);
+                
+                // Update metrics
+                document.getElementById('emotion-score').textContent = result.emotionScore.toFixed(3);
+                document.getElementById('synthetic-prob').textContent = result.syntheticProbability.toFixed(3);
+                document.getElementById('confidence').textContent = result.confidence.toFixed(3);
+                document.getElementById('processing-time').textContent = result.processingTime.toFixed(2);
+                
+                // Show results
+                resultsEl.textContent = JSON.stringify(result, null, 2);
+                resultsEl.style.display = 'block';
+                metricsEl.style.display = 'grid';
+                
+                testResults.push({
+                    type: 'image',
+                    result: result,
+                    timestamp: new Date().toISOString()
+                });
+                
+                updatePerformanceMetrics();
+                
+            } catch (error) {
+                resultsEl.textContent = 'Error: ' + error.message;
+                resultsEl.style.display = 'block';
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Analyze Image';
+            }
+        }
+
+        function loadSampleImage() {
+            // Create a sample canvas image for testing
+            const canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw a simple test pattern
+            const gradient = ctx.createLinearGradient(0, 0, 300, 300);
+            gradient.addColorStop(0, '#ff6b6b');
+            gradient.addColorStop(0.5, '#4ecdc4');
+            gradient.addColorStop(1, '#45b7d1');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 300, 300);
+            
+            // Add some text
+            ctx.fillStyle = 'white';
+            ctx.font = '24px Arial';
+            ctx.fillText('Sample Test Image', 50, 150);
+            
+            // Convert to image
+            const imageEl = document.getElementById('test-image');
+            imageEl.src = canvas.toDataURL();
+        }
+
+        function updatePerformanceMetrics() {
+            const metricsEl = document.getElementById('performance-metrics');
+            
+            if (testResults.length === 0) return;
+            
+            const avgProcessingTime = testResults.reduce((sum, r) => sum + r.result.processingTime, 0) / testResults.length;
+            const avgConfidence = testResults.reduce((sum, r) => sum + r.result.confidence, 0) / testResults.length;
+            
+            metricsEl.innerHTML = `
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">${testResults.length}</div>
+                        <div class="metric-label">Tests Run</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${avgProcessingTime.toFixed(2)}s</div>
+                        <div class="metric-label">Avg Processing Time</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${avgConfidence.toFixed(3)}</div>
+                        <div class="metric-label">Avg Confidence</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${JSON.stringify(tf.memory().numTensors)}</div>
+                        <div class="metric-label">Active Tensors</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Event listeners
+        document.getElementById('analyze-image').addEventListener('click', testImageAnalysis);
+        document.getElementById('load-sample').addEventListener('click', loadSampleImage);
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeTests);
+    </script>
+</body>
+</html>

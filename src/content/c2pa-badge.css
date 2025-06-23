@@ -1,0 +1,357 @@
+/* ================================
+   C2PA Authenticity Badge
+   Clean, professional overlay badge
+   ================================ */
+
+.soft-armor-c2pa-badge {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
+  padding: 8px 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  user-select: none;
+  position: relative;
+  min-width: 140px;
+}
+
+.soft-armor-c2pa-badge:hover,
+.soft-armor-c2pa-badge.badge-hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.soft-armor-c2pa-badge:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Badge Type Variations */
+.soft-armor-c2pa-badge.badge-verified {
+  border-color: #10b981;
+  background: rgba(240, 253, 244, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-verified-medium {
+  border-color: #f59e0b;
+  background: rgba(255, 251, 235, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-untrusted {
+  border-color: #f59e0b;
+  background: rgba(255, 251, 235, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-invalid {
+  border-color: #ef4444;
+  background: rgba(254, 242, 242, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-none {
+  border-color: #6b7280;
+  background: rgba(249, 250, 251, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-error {
+  border-color: #8b5cf6;
+  background: rgba(245, 243, 255, 0.95);
+}
+
+.soft-armor-c2pa-badge.badge-unknown {
+  border-color: #6b7280;
+  background: rgba(249, 250, 251, 0.95);
+}
+
+/* Badge Content Layout */
+.badge-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.badge-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.badge-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.badge-text {
+  font-weight: 600;
+  color: #111827;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.badge-confidence {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.badge-expand {
+  font-size: 14px;
+  color: #6b7280;
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.soft-armor-c2pa-badge:hover .badge-expand {
+  opacity: 1;
+}
+
+/* Tooltip */
+.badge-tooltip {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background: #111827;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.badge-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #111827;
+}
+
+.soft-armor-c2pa-badge:hover .badge-tooltip {
+  opacity: 1;
+}
+
+/* Auto-hide animation */
+.soft-armor-c2pa-badge.badge-auto-hide {
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+.soft-armor-c2pa-badge.badge-auto-hide:hover {
+  opacity: 1;
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* ================================
+   Mini Badge (for scan results)
+   ================================ */
+
+.soft-armor-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+
+.soft-armor-mini-badge.badge-verified {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.soft-armor-mini-badge.badge-verified-medium {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.soft-armor-mini-badge.badge-untrusted {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.soft-armor-mini-badge.badge-invalid {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.soft-armor-mini-badge.badge-none {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.soft-armor-mini-badge.badge-error {
+  background: #ede9fe;
+  color: #7c3aed;
+  border-color: #ddd6fe;
+}
+
+.soft-armor-mini-badge.badge-unknown {
+  background: #f3f4f6;
+  color: #6b7280;
+  border-color: #e5e7eb;
+}
+
+.mini-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.mini-confidence {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* ================================
+   Responsive Design
+   ================================ */
+
+@media (max-width: 640px) {
+  .soft-armor-c2pa-badge {
+    min-width: 120px;
+    padding: 6px 10px;
+  }
+
+  .badge-icon {
+    font-size: 14px;
+  }
+
+  .badge-text {
+    font-size: 11px;
+  }
+
+  .badge-confidence {
+    font-size: 9px;
+  }
+
+  .badge-expand {
+    font-size: 12px;
+  }
+
+  .badge-tooltip {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+}
+
+/* ================================
+   Accessibility & Motion
+   ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .soft-armor-c2pa-badge,
+  .badge-content,
+  .badge-expand,
+  .badge-tooltip {
+    transition: none;
+  }
+
+  .soft-armor-c2pa-badge:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .soft-armor-c2pa-badge {
+    background: white;
+    border-width: 3px;
+  }
+
+  .soft-armor-c2pa-badge.badge-verified {
+    background: #f0fff4;
+    border-color: #22c55e;
+  }
+
+  .soft-armor-c2pa-badge.badge-invalid {
+    background: #fef2f2;
+    border-color: #ef4444;
+  }
+
+  .soft-armor-c2pa-badge.badge-untrusted {
+    background: #fffbeb;
+    border-color: #f59e0b;
+  }
+}
+
+/* ================================
+   Animation Keyframes
+   ================================ */
+
+@keyframes badge-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-100%) scale(1);
+  }
+}
+
+.soft-armor-c2pa-badge {
+  animation: badge-slide-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================
+   Badge Positioning Utilities
+   ================================ */
+
+.soft-armor-c2pa-badge.badge-position-top-right {
+  top: 8px;
+  right: 8px;
+}
+
+.soft-armor-c2pa-badge.badge-position-top-left {
+  top: 8px;
+  left: 8px;
+  transform: none;
+}
+
+.soft-armor-c2pa-badge.badge-position-bottom-right {
+  bottom: 8px;
+  right: 8px;
+  transform: none;
+}
+
+.soft-armor-c2pa-badge.badge-position-bottom-left {
+  bottom: 8px;
+  left: 8px;
+  transform: none;
+}
+
+/* ================================
+   Integration with Media Elements
+   ================================ */
+
+/* Ensure badges appear above media content */
+img[data-soft-armor-scanned],
+video[data-soft-armor-scanned] {
+  position: relative;
+}
+
+/* Handle video player controls */
+video[data-soft-armor-scanned]:hover + .soft-armor-c2pa-badge {
+  z-index: 10001;
+}

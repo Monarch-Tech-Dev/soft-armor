@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft-Armor Extension Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        img, video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .status {
+            background: #f0f8f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Soft-Armor Extension Test Page</h1>
+    
+    <div class="instructions">
+        <h3>How to Test:</h3>
+        <ol>
+            <li>Load the extension in Chrome Developer Mode from the <code>/dist</code> folder</li>
+            <li>Right-click on any image or video below</li>
+            <li>Look for "🛡️ Soft-Armor → Scan for authenticity" in the context menu</li>
+            <li>Click to run a scan and verify the banner appears</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Image - JPEG</h3>
+        <img src="src/assets/fixtures/test-image.jpg" alt="Test image for authenticity scanning">
+        <div class="status">Right-click the image above to test scanning functionality.</div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Video - MP4</h3>
+        <video controls>
+            <source src="src/assets/fixtures/test-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="status">Right-click the video above to test video scanning.</div>
+    </div>
+
+    <div class="test-section">
+        <h3>External Image Test</h3>
+        <img src="https://picsum.photos/400/300" alt="External test image">
+        <div class="status">Right-click to test scanning external images (may have CORS limitations).</div>
+    </div>
+
+    <div class="test-section">
+        <h3>Performance Monitoring Test</h3>
+        <p>Open Developer Tools Console to see performance metrics and monitoring output.</p>
+        <button onclick="testPerformanceAPI()">Test Performance Monitoring</button>
+        <div id="performance-output"></div>
+    </div>
+
+    <script>
+        // Test the performance monitoring API
+        function testPerformanceAPI() {
+            const output = document.getElementById('performance-output');
+            
+            // Check if the extension has injected any global objects
+            output.innerHTML = `
+                <h4>Browser Extension Status:</h4>
+                <p>Context menus available: ${typeof chrome !== 'undefined' && chrome.contextMenus ? '✅' : '❌'}</p>
+                <p>Extension runtime: ${typeof chrome !== 'undefined' && chrome.runtime ? '✅' : '❌'}</p>
+                <p>Performance API: ${typeof performance !== 'undefined' ? '✅' : '❌'}</p>
+                <p>Memory API: ${typeof performance !== 'undefined' && performance.memory ? '✅' : '❌'}</p>
+            `;
+
+            // Test performance measurement
+            if (typeof performance !== 'undefined') {
+                const start = performance.now();
+                setTimeout(() => {
+                    const end = performance.now();
+                    output.innerHTML += `<p>Test timing measurement: ${(end - start).toFixed(2)}ms</p>`;
+                }, 100);
+            }
+
+            console.log('Soft-Armor Extension Test - Check console for performance data');
+        }
+
+        // Add event listeners to log right-click events
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+                console.log('Right-click detected on media element:', e.target);
+            }
+        });
+
+        // Test message passing
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'SOFT_ARMOR_SCAN') {
+                console.log('Soft-Armor scan message received:', event.data);
+            }
+        });
+
+        console.log('Soft-Armor test page loaded - Extension should be active');
+    </script>
+</body>
+</html>

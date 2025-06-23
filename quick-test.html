@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Scanner Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .test-image {
+            max-width: 300px;
+            margin: 20px 0;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🛡️ Quick Scanner Test</h1>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <p>1. Make sure the Soft-Armor extension is loaded in Chrome</p>
+            <p>2. Right-click the image below</p>
+            <p>3. Select "🛡️ Soft-Armor → Scan for authenticity"</p>
+            <p>4. Check the console (F12) for debug messages</p>
+        </div>
+        
+        <img src="https://picsum.photos/300/200?random=999" 
+             alt="Test image for scanning" 
+             class="test-image">
+        
+        <p><small>This should now complete scanning within 5 seconds with debug logs</small></p>
+    </div>
+
+    <script>
+        console.log('📋 Quick test page loaded');
+        console.log('🔍 Looking for extension activity...');
+        
+        // Listen for extension messages
+        window.addEventListener('message', (event) => {
+            console.log('📡 Message received:', event.data);
+        });
+        
+        // Check for extension injection
+        setTimeout(() => {
+            const hasExtensionCSS = document.querySelector('link[href*="overlay.css"]') || 
+                                    document.querySelector('style[data-soft-armor]');
+            if (hasExtensionCSS) {
+                console.log('✅ Extension detected - CSS injected');
+            } else {
+                console.log('⚠️ Extension not detected - make sure it\'s loaded');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

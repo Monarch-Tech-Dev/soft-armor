@@ -1,8 +1,8 @@
 {
-  "name": "Soft-Armor™ Scan",
-  "version": "0.1.0",
+  "name": "Soft-Armor: Media Authenticity Scanner",
+  "version": "1.0.0",
   "manifest_version": 3,
-  "description": "Right-click media → traffic-light authenticity check",
+  "description": "AI-powered media verification. Right-click any image or video for instant authenticity scanning with C2PA support.",
   
   "permissions": [
     "activeTab",

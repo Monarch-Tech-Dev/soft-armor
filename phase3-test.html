@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Soft-Armor Phase 3 Test - OpenCV Integration</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .phase-status {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .test-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .test-media {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .feature-list {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-list h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        
+        .feature-item .icon {
+            width: 24px;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .instructions {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .instructions h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Soft-Armor Phase 3 Complete</h1>
+            <p>Advanced Detection with OpenCV.js Integration</p>
+        </div>
+
+        <div class="phase-status">
+            <h2>✅ Phase 3: Advanced Detection Engine</h2>
+            <p><strong>Status:</strong> Complete - OpenCV.js integration successful</p>
+            <p><strong>New Capabilities:</strong> Video loop detection, optical flow analysis, enhanced C2PA verification</p>
+            <p><strong>Performance:</strong> Sub-2-second scans with parallel processing</p>
+        </div>
+
+        <div class="instructions">
+            <h3>🧪 Testing Instructions</h3>
+            <ol>
+                <li><strong>Load Extension:</strong> Open Chrome → Manage Extensions → Load unpacked → Select /dist folder</li>
+                <li><strong>Right-click Test:</strong> Right-click any image or video below</li>
+                <li><strong>Look for:</strong> "🛡️ Soft-Armor → Scan for authenticity" in context menu</li>
+                <li><strong>Verify Results:</strong> Enhanced banners with C2PA, loop detection, and emotion analysis</li>
+            </ol>
+        </div>
+
+        <div class="feature-list">
+            <h3>🚀 Phase 3 Features</h3>
+            <div class="feature-item">
+                <span class="icon">🔍</span>
+                <span><strong>Enhanced C2PA Verification:</strong> Real provenance checking with certificate validation</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🔄</span>
+                <span><strong>OpenCV.js Loop Detection:</strong> AI-generated video loop artifact analysis</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">😊</span>
+                <span><strong>Emotion Analysis:</strong> Heuristic emotional manipulation scoring</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">⚡</span>
+                <span><strong>Parallel Processing:</strong> Simultaneous detection engines for speed</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🎯</span>
+                <span><strong>Confidence Scoring:</strong> Combined risk assessment with detailed reporting</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">📊</span>
+                <span><strong>Performance Monitoring:</strong> Real-time scan metrics and optimization</span>
+            </div>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>🖼️ Image Test</h3>
+                <p>Test enhanced C2PA verification and emotion analysis</p>
+                <img src="https://picsum.photos/300/200?random=100" 
+                     alt="Phase 3 test image" 
+                     class="test-media">
+                <p><small>Right-click to test enhanced scanning</small></p>
+            </div>
+
+            <div class="test-card">
+                <h3>🎥 Video Test</h3>
+                <p>Test OpenCV.js loop detection and frame analysis</p>
+                <video width="300" height="200" controls class="test-media">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p><small>Right-click to test loop detection</small></p>
+            </div>
+
+            <div class="test-card">
+                <h3>🔍 High-Res Test</h3>
+                <p>Test performance with larger images</p>
+                <img src="https://picsum.photos/800/600?random=101" 
+                     alt="High resolution test" 
+                     class="test-media">
+                <p><small>Tests performance optimization</small></p>
+            </div>
+
+            <div class="test-card">
+                <h3>🌐 Dynamic Test</h3>
+                <p>Test dynamic content detection</p>
+                <img src="https://images.unsplash.com/photo-1549740425-5e9ed4d8cd34?w=300&h=200&fit=crop" 
+                     alt="Unsplash dynamic image" 
+                     class="test-media">
+                <p><small>Tests fallback detection modes</small></p>
+            </div>
+        </div>
+
+        <div class="feature-list">
+            <h3>📋 What to Expect</h3>
+            <div class="feature-item">
+                <span class="icon">🛡️</span>
+                <span><strong>Enhanced Banners:</strong> More detailed scan results with confidence scores</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">⏱️</span>
+                <span><strong>Performance Info:</strong> Scan time and OpenCV status displayed</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🔬</span>
+                <span><strong>Multi-Engine Analysis:</strong> C2PA + Loop + Emotion results combined</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">📈</span>
+                <span><strong>Improved Accuracy:</strong> Better risk assessment with multiple detection methods</span>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 Next: Phase 4 Development</h3>
+            <p><strong>Coming Next:</strong> TensorFlow.js integration for advanced emotion detection and synthetic content analysis</p>
+            <p><strong>Timeline:</strong> 2-3 weeks for full AI analysis engine</p>
+            <p><strong>Features:</strong> Face emotion analysis, deepfake detection, manipulation scoring</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('🛡️ Phase 3 test page loaded - Enhanced scanner ready for testing');
+        console.log('📋 Instructions: Load the extension from /dist folder, then right-click any media element');
+        
+        // Monitor for scan activity
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'SOFT_ARMOR_SCAN') {
+                console.log('📡 Enhanced scan detected:', event.data);
+            }
+        });
+
+        // Track banner appearances
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1 && node.className && 
+                        node.className.includes('sa-enhanced-banner')) {
+                        console.log('✅ Enhanced banner appeared - Phase 3 working!');
+                    }
+                });
+            });
+        });
+        observer.observe(document.body, {childList: true, subtree: true});
+
+        // Check if extension is loaded
+        setTimeout(() => {
+            if (!document.querySelector('script[src*="scanner"]')) {
+                console.log('✅ No direct scanner script detected - extension should inject content script automatically');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

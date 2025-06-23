@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Soft-Armor Comprehensive Test Suite</title>
+    <style>
+        :root {
+            --color-green: #10b981;
+            --color-amber: #f59e0b;
+            --color-red: #ef4444;
+            --color-blue: #3b82f6;
+            --color-gray: #6b7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .status-dashboard {
+            background: #f8fafc;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--color-gray);
+        }
+        
+        .status-card.green { border-left-color: var(--color-green); }
+        .status-card.amber { border-left-color: var(--color-amber); }
+        .status-card.red { border-left-color: var(--color-red); }
+        .status-card.blue { border-left-color: var(--color-blue); }
+        
+        .status-card h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .status-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .debug-console {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 0.875rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .debug-console .log-entry {
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+        
+        .debug-console .log-entry.success { color: #34d399; }
+        .debug-console .log-entry.warning { color: #fbbf24; }
+        .debug-console .log-entry.error { color: #f87171; }
+        .debug-console .log-entry.info { color: #60a5fa; }
+        
+        .test-sections {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .test-section-header {
+            background: #f8fafc;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .test-section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .test-section-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .test-item {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        
+        .test-item:hover {
+            border-color: var(--color-blue);
+            background: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .test-item p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .test-media {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-media.bg-image {
+            width: 200px;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #d1d5db;
+        }
+        
+        .controls {
+            background: #f8fafc;
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .btn {
+            background: var(--color-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .btn.green { background: var(--color-green); }
+        .btn.green:hover { background: #059669; }
+        
+        .btn.amber { background: var(--color-amber); }
+        .btn.amber:hover { background: #d97706; }
+        
+        .btn.red { background: var(--color-red); }
+        .btn.red:hover { background: #dc2626; }
+        
+        .progress-goals {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid #c7d2fe;
+        }
+        
+        .progress-goals h3 {
+            color: #3730a3;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 6px;
+        }
+        
+        .goal-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .goal-status.done { background: var(--color-green); }
+        .goal-status.progress { background: var(--color-amber); }
+        .goal-status.pending { background: var(--color-gray); }
+        
+        @media (max-width: 768px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🛡️ Soft-Armor Test Suite</h1>
+            <p>Comprehensive testing environment for media authenticity verification extension</p>
+        </div>
+
+        <!-- Status Dashboard -->
+        <div class="status-dashboard">
+            <div class="status-grid">
+                <div class="status-card blue">
+                    <h3>Extension Status</h3>
+                    <div class="value" id="extension-status">Checking...</div>
+                </div>
+                <div class="status-card green">
+                    <h3>Successful Scans</h3>
+                    <div class="value" id="successful-scans">0</div>
+                </div>
+                <div class="status-card amber">
+                    <h3>Failed Scans</h3>
+                    <div class="value" id="failed-scans">0</div>
+                </div>
+                <div class="status-card red">
+                    <h3>Errors Detected</h3>
+                    <div class="value" id="errors-detected">0</div>
+                </div>
+            </div>
+
+            <!-- Project Progress Goals -->
+            <div class="progress-goals">
+                <h3>🎯 Project Goals & Progress</h3>
+                <div class="goal-item">
+                    <div class="goal-status done">✓</div>
+                    <span><strong>Phase 1:</strong> Context menu integration & basic scanning framework</span>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-status progress">⚡</div>
+                    <span><strong>Phase 2:</strong> C2PA provenance verification & traffic-light UI system</span>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-status pending">○</div>
+                    <span><strong>Phase 3:</strong> OpenCV.js loop detection for AI-generated videos</span>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-status pending">○</div>
+                    <span><strong>Phase 4:</strong> TensorFlow.js emotion manipulation analysis</span>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-status pending">○</div>
+                    <span><strong>Phase 5:</strong> Cloud features: reverse search & verification pods</span>
+                </div>
+            </div>
+
+            <!-- Debug Console -->
+            <div class="debug-console" id="debug-console">
+                <div class="log-entry info">[INFO] Test suite initialized</div>
+                <div class="log-entry info">[INFO] Waiting for extension detection...</div>
+            </div>
+        </div>
+
+        <!-- Test Sections -->
+        <div class="test-sections">
+            <!-- Basic Media Types -->
+            <div class="test-section">
+                <div class="test-section-header">
+                    <h2>1. Basic Media Types</h2>
+                    <p>Test context menu and scanning on standard image and video elements</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-item">
+                        <h3>JPEG Image (Direct URL)</h3>
+                        <p>Standard JPEG with direct src attribute</p>
+                        <img src="https://picsum.photos/300/200?random=1" 
+                             alt="Test JPEG" 
+                             class="test-media"
+                             data-test-type="direct-jpeg">
+                    </div>
+                    <div class="test-item">
+                        <h3>PNG Image with CORS</h3>
+                        <p>PNG image that may have CORS restrictions</p>
+                        <img src="https://via.placeholder.com/300x200/4f46e5/ffffff?text=PNG+Test" 
+                             alt="Test PNG" 
+                             class="test-media"
+                             data-test-type="cors-png">
+                    </div>
+                    <div class="test-item">
+                        <h3>WebP Image</h3>
+                        <p>Modern WebP format image</p>
+                        <img src="https://picsum.photos/300/200.webp?random=2" 
+                             alt="Test WebP" 
+                             class="test-media"
+                             data-test-type="webp-image">
+                    </div>
+                    <div class="test-item">
+                        <h3>MP4 Video</h3>
+                        <p>Standard MP4 video element</p>
+                        <video width="300" height="200" controls class="test-media" data-test-type="mp4-video">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Loading -->
+            <div class="test-section">
+                <div class="test-section-header">
+                    <h2>2. Dynamic Loading Scenarios</h2>
+                    <p>Test edge cases with lazy loading, responsive images, and dynamic content</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-item">
+                        <h3>Lazy-Loaded Image</h3>
+                        <p>Image with data-src attribute (common pattern)</p>
+                        <img data-src="https://picsum.photos/300/200?random=3" 
+                             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23ddd'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='0.3em'%3ELoading...%3C/text%3E%3C/svg%3E"
+                             alt="Lazy loaded" 
+                             class="test-media"
+                             data-test-type="lazy-loaded">
+                    </div>
+                    <div class="test-item">
+                        <h3>Responsive Image (srcset)</h3>
+                        <p>Image with multiple sources for different screen sizes</p>
+                        <img src="https://picsum.photos/300/200?random=4"
+                             srcset="https://picsum.photos/600/400?random=4 2x, https://picsum.photos/900/600?random=4 3x"
+                             alt="Responsive image" 
+                             class="test-media"
+                             data-test-type="responsive-srcset">
+                    </div>
+                    <div class="test-item">
+                        <h3>CSS Background Image</h3>
+                        <p>Image loaded as CSS background (not img element)</p>
+                        <div class="test-media bg-image" 
+                             style="background-image: url('https://picsum.photos/400/300?random=5')"
+                             data-test-type="css-background">
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <h3>Dynamically Added Image</h3>
+                        <p>Image added after page load via JavaScript</p>
+                        <div id="dynamic-container" data-test-type="dynamic-js">
+                            <button class="btn" onclick="addDynamicImage()">Load Dynamic Image</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Scenarios -->
+            <div class="test-section">
+                <div class="test-section-header">
+                    <h2>3. Error Scenarios</h2>
+                    <p>Test error handling for broken images, network issues, and unsupported formats</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-item">
+                        <h3>Broken Image (404)</h3>
+                        <p>Image with non-existent URL</p>
+                        <img src="https://example.com/nonexistent-image.jpg" 
+                             alt="Broken image" 
+                             class="test-media"
+                             data-test-type="broken-404"
+                             onerror="this.style.border='2px solid red'; this.alt='❌ 404 Error';">
+                    </div>
+                    <div class="test-item">
+                        <h3>CORS Blocked Image</h3>
+                        <p>Image that may be blocked by CORS policy</p>
+                        <img src="https://httpbin.org/image/jpeg" 
+                             alt="CORS test" 
+                             class="test-media"
+                             data-test-type="cors-blocked">
+                    </div>
+                    <div class="test-item">
+                        <h3>Very Large Image</h3>
+                        <p>Large image to test performance</p>
+                        <img src="https://picsum.photos/2000/1500?random=6" 
+                             alt="Large image" 
+                             class="test-media"
+                             data-test-type="large-image">
+                    </div>
+                    <div class="test-item">
+                        <h3>Encrypted/HTTPS Image</h3>
+                        <p>Image served over HTTPS with potential certificate issues</p>
+                        <img src="https://images.unsplash.com/photo-1549740425-5e9ed4d8cd34?w=300&h=200&fit=crop" 
+                             alt="HTTPS image" 
+                             class="test-media"
+                             data-test-type="https-image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edge Cases -->
+            <div class="test-section">
+                <div class="test-section-header">
+                    <h2>4. Edge Cases & Special Formats</h2>
+                    <p>Test unusual scenarios and special media formats</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-item">
+                        <h3>SVG Image</h3>
+                        <p>Scalable Vector Graphics format</p>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='100%25' height='100%25' fill='%234f46e5'/%3E%3Ccircle cx='150' cy='100' r='50' fill='white'/%3E%3Ctext x='150' y='170' text-anchor='middle' fill='white' font-family='Arial'%3ESVG Test%3C/text%3E%3C/svg%3E" 
+                             alt="SVG test" 
+                             class="test-media"
+                             data-test-type="svg-image">
+                    </div>
+                    <div class="test-item">
+                        <h3>Data URL Image</h3>
+                        <p>Base64 encoded image in data URL</p>
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" 
+                             alt="Data URL" 
+                             class="test-media"
+                             data-test-type="data-url"
+                             style="width:300px;height:200px;background:#ddd;">
+                    </div>
+                    <div class="test-item">
+                        <h3>Picture Element</h3>
+                        <p>HTML5 picture element with multiple sources</p>
+                        <picture class="test-media" data-test-type="picture-element">
+                            <source media="(min-width: 800px)" srcset="https://picsum.photos/400/300?random=7">
+                            <source media="(min-width: 400px)" srcset="https://picsum.photos/300/200?random=7">
+                            <img src="https://picsum.photos/200/150?random=7" alt="Picture element">
+                        </picture>
+                    </div>
+                    <div class="test-item">
+                        <h3>Iframe Video</h3>
+                        <p>Embedded video in iframe (YouTube style)</p>
+                        <iframe width="300" height="200" 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                frameborder="0" 
+                                class="test-media"
+                                data-test-type="iframe-video">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn green" onclick="runAllTests()">🧪 Run All Tests</button>
+            <button class="btn blue" onclick="checkExtensionStatus()">🔍 Check Extension</button>
+            <button class="btn amber" onclick="clearLogs()">🗑️ Clear Logs</button>
+            <button class="btn red" onclick="resetCounters()">🔄 Reset Counters</button>
+            <button class="btn" onclick="exportResults()">📊 Export Results</button>
+        </div>
+    </div>
+
+    <script>
+        // Test Suite JavaScript
+        let testResults = {
+            successful: 0,
+            failed: 0,
+            errors: 0,
+            logs: []
+        };
+
+        // Initialize test suite
+        document.addEventListener('DOMContentLoaded', function() {
+            logMessage('Test suite loaded successfully', 'success');
+            checkExtensionStatus();
+            initializeTestTracking();
+        });
+
+        // Enhanced extension detection
+        function checkExtensionStatus() {
+            logMessage('Checking for Soft-Armor extension...', 'info');
+            
+            let extensionFound = false;
+            
+            // Method 1: Check for debug scanner
+            if (window.softArmorDebug) {
+                logMessage('✅ Extension detected: Debug scanner available', 'success');
+                document.getElementById('extension-status').textContent = 'Active (Debug)';
+                document.getElementById('extension-status').parentElement.className = 'status-card green';
+                extensionFound = true;
+                return;
+            }
+            
+            // Method 2: Check for content script injection by looking for CSS
+            const softArmorStyles = document.querySelector('link[href*="overlay.css"], style[id*="sa-debug"]');
+            if (softArmorStyles) {
+                logMessage('✅ Extension detected: Content script CSS found', 'success');
+                document.getElementById('extension-status').textContent = 'Active (CSS)';
+                document.getElementById('extension-status').parentElement.className = 'status-card green';
+                extensionFound = true;
+                return;
+            }
+            
+            // Method 3: Check for extension context menus by testing scan functionality
+            logMessage('🔍 Testing extension functionality...', 'info');
+            
+            // Create a test image and see if we can scan it
+            const testImg = document.createElement('img');
+            testImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+            testImg.style.display = 'none';
+            document.body.appendChild(testImg);
+            
+            // Listen for scan messages which would indicate extension is working
+            const messageListener = (event) => {
+                if (event.data && event.data.type === 'SOFT_ARMOR_SCAN') {
+                    logMessage('✅ Extension detected: Scan functionality working', 'success');
+                    document.getElementById('extension-status').textContent = 'Active (Functional)';
+                    document.getElementById('extension-status').parentElement.className = 'status-card green';
+                    window.removeEventListener('message', messageListener);
+                    extensionFound = true;
+                }
+            };
+            window.addEventListener('message', messageListener);
+            
+            // Method 4: Try chrome extension APIs
+            setTimeout(() => {
+                if (!extensionFound && typeof chrome !== 'undefined' && chrome.runtime) {
+                    try {
+                        // Check if chrome.runtime.getManifest exists (indicates extension context)
+                        if (chrome.runtime.getManifest) {
+                            logMessage('✅ Extension detected: Chrome runtime available', 'success');
+                            document.getElementById('extension-status').textContent = 'Active (Runtime)';
+                            document.getElementById('extension-status').parentElement.className = 'status-card amber';
+                            extensionFound = true;
+                        } else {
+                            // Try message passing
+                            chrome.runtime.sendMessage({type: 'EXTENSION_PING'}, (response) => {
+                                if (chrome.runtime.lastError) {
+                                    // Expected - no response handler in background script
+                                    logMessage('✅ Extension detected: Chrome runtime responding', 'success');
+                                    document.getElementById('extension-status').textContent = 'Active (Runtime)';
+                                    document.getElementById('extension-status').parentElement.className = 'status-card amber';
+                                    extensionFound = true;
+                                } else if (response) {
+                                    logMessage('✅ Extension detected: Message response received', 'success');
+                                    document.getElementById('extension-status').textContent = 'Active (Messaging)';
+                                    document.getElementById('extension-status').parentElement.className = 'status-card green';
+                                    extensionFound = true;
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        logMessage(`Extension API test failed: ${e.message}`, 'warning');
+                    }
+                }
+                
+                // Final fallback: Check if we can observe banner creation
+                setTimeout(() => {
+                    if (!extensionFound) {
+                        logMessage('❌ Extension not detected through any method', 'error');
+                        logMessage('💡 However, if scans are working, extension may still be active', 'info');
+                        document.getElementById('extension-status').textContent = 'Unknown';
+                        document.getElementById('extension-status').parentElement.className = 'status-card red';
+                    }
+                    
+                    // Clean up test image
+                    if (testImg.parentNode) {
+                        testImg.parentNode.removeChild(testImg);
+                    }
+                    window.removeEventListener('message', messageListener);
+                }, 2000);
+            }, 1000);
+        }
+
+        // Test tracking
+        function initializeTestTracking() {
+            // Listen for scan events
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'SOFT_ARMOR_SCAN') {
+                    logMessage(`📡 Scan initiated: ${event.data.mediaUrl}`, 'info');
+                    trackTestExecution('scan-initiated');
+                }
+            });
+
+            // Track banner appearances
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1) {
+                            if (node.classList && (node.classList.contains('sa-debug-banner') || 
+                                                 node.classList.contains('sa-banner'))) {
+                                logMessage('✅ Scan result banner appeared', 'success');
+                                trackTestExecution('scan-success');
+                            }
+                        }
+                    });
+                });
+            });
+            observer.observe(document.body, {childList: true, subtree: true});
+        }
+
+        // Test execution tracking
+        function trackTestExecution(type) {
+            switch(type) {
+                case 'scan-initiated':
+                    // If we detect scan initiation, extension is definitely working
+                    updateExtensionStatus('Active (Scanning)', 'green');
+                    break;
+                case 'scan-success':
+                    testResults.successful++;
+                    updateCounters();
+                    updateExtensionStatus('Active (Working)', 'green');
+                    break;
+                case 'scan-failed':
+                    testResults.failed++;
+                    updateCounters();
+                    break;
+                case 'error':
+                    testResults.errors++;
+                    updateCounters();
+                    break;
+            }
+        }
+
+        // Update extension status helper
+        function updateExtensionStatus(status, colorClass) {
+            const statusElement = document.getElementById('extension-status');
+            const statusCard = statusElement.parentElement;
+            
+            if (statusElement.textContent === 'Not Found' || statusElement.textContent === 'Unknown') {
+                statusElement.textContent = status;
+                statusCard.className = `status-card ${colorClass}`;
+                logMessage(`🔄 Extension status updated: ${status}`, 'success');
+            }
+        }
+
+        // Run automated tests
+        function runAllTests() {
+            logMessage('🧪 Starting automated test suite...', 'info');
+            
+            const testItems = document.querySelectorAll('[data-test-type]');
+            let testIndex = 0;
+            
+            function runNextTest() {
+                if (testIndex >= testItems.length) {
+                    logMessage('✅ All tests completed', 'success');
+                    return;
+                }
+                
+                const item = testItems[testIndex];
+                const testType = item.getAttribute('data-test-type');
+                const mediaElement = item.querySelector('img, video, div[style*="background-image"]');
+                
+                logMessage(`Testing: ${testType}`, 'info');
+                
+                if (mediaElement) {
+                    // Highlight current test
+                    item.style.background = '#f0f9ff';
+                    item.style.borderColor = '#3b82f6';
+                    
+                    // Simulate right-click for manual testing
+                    logMessage(`Right-click on the ${testType} element to test`, 'warning');
+                    
+                    // Move to next test after delay
+                    setTimeout(() => {
+                        item.style.background = '';
+                        item.style.borderColor = '';
+                        testIndex++;
+                        runNextTest();
+                    }, 3000);
+                } else {
+                    logMessage(`⚠️ No media element found for ${testType}`, 'warning');
+                    testIndex++;
+                    runNextTest();
+                }
+            }
+            
+            runNextTest();
+        }
+
+        // Dynamic image addition
+        function addDynamicImage() {
+            const container = document.getElementById('dynamic-container');
+            const img = document.createElement('img');
+            img.src = `https://picsum.photos/300/200?random=${Date.now()}`;
+            img.alt = 'Dynamic image';
+            img.className = 'test-media';
+            img.style.marginTop = '10px';
+            
+            container.appendChild(img);
+            logMessage('🆕 Dynamic image added', 'info');
+        }
+
+        // Logging system
+        function logMessage(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${message}`;
+            
+            testResults.logs.push({timestamp, message, type});
+            
+            const console = document.getElementById('debug-console');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            
+            console.appendChild(logEntry);
+            console.scrollTop = console.scrollHeight;
+            
+            // Limit log entries
+            if (console.children.length > 100) {
+                console.removeChild(console.firstChild);
+            }
+        }
+
+        // Update counters
+        function updateCounters() {
+            document.getElementById('successful-scans').textContent = testResults.successful;
+            document.getElementById('failed-scans').textContent = testResults.failed;
+            document.getElementById('errors-detected').textContent = testResults.errors;
+        }
+
+        // Clear logs
+        function clearLogs() {
+            document.getElementById('debug-console').innerHTML = '';
+            testResults.logs = [];
+            logMessage('Debug console cleared', 'info');
+        }
+
+        // Reset counters
+        function resetCounters() {
+            testResults = {successful: 0, failed: 0, errors: 0, logs: testResults.logs};
+            updateCounters();
+            logMessage('Counters reset', 'info');
+        }
+
+        // Export test results
+        function exportResults() {
+            const results = {
+                timestamp: new Date().toISOString(),
+                summary: {
+                    successful: testResults.successful,
+                    failed: testResults.failed,
+                    errors: testResults.errors,
+                    total: testResults.successful + testResults.failed
+                },
+                logs: testResults.logs,
+                userAgent: navigator.userAgent,
+                extensionStatus: document.getElementById('extension-status').textContent
+            };
+            
+            const blob = new Blob([JSON.stringify(results, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `soft-armor-test-results-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            logMessage('📊 Test results exported', 'success');
+        }
+
+        // Error handling
+        window.addEventListener('error', function(event) {
+            logMessage(`JavaScript Error: ${event.error.message}`, 'error');
+            trackTestExecution('error');
+        });
+
+        // Console intercept for better debugging
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.log = function(...args) {
+            if (args[0] && args[0].includes && args[0].includes('Soft-Armor')) {
+                logMessage(args.join(' '), 'info');
+            }
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            if (args[0] && args[0].includes && args[0].includes('Soft-Armor')) {
+                logMessage('ERROR: ' + args.join(' '), 'error');
+                trackTestExecution('error');
+            }
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            if (args[0] && args[0].includes && args[0].includes('Soft-Armor')) {
+                logMessage('WARNING: ' + args.join(' '), 'warning');
+            }
+            originalWarn.apply(console, args);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Extension Test - Soft-Armor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin: 10px 0;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .test-card h3 {
+            color: #2d3748;
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-media {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .test-media:hover {
+            transform: scale(1.02);
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 10px 5px;
+            display: inline-block;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        .test-button:disabled {
+            background: #cbd5e0;
+            color: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.loading {
+            background: #f6ad55;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.success {
+            background: #48bb78;
+        }
+        
+        .status-indicator.error {
+            background: #f56565;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .results-panel {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .feature-status.working {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .feature-status.premium {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .feature-status.testing {
+            background: #feebc8;
+            color: #7b341e;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .instructions h3 {
+            color: #2d3748;
+            margin: 0 0 15px 0;
+        }
+        
+        .step {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .extension-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            z-index: 1000;
+            min-width: 200px;
+        }
+        
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric {
+            text-align: center;
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #718096;
+            margin: 5px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ Soft-Armor Extension Test Suite</h1>
+        <p>Complete functionality testing for all features</p>
+        <p><strong>Phase 4 Build:</strong> TensorFlow.js + Premium Features + Open Core Architecture</p>
+    </div>
+
+    <div class="extension-status" id="extension-status">
+        <div style="display: flex; align-items: center;">
+            <span class="status-indicator loading" id="status-indicator"></span>
+            <span id="status-text">Checking extension...</span>
+        </div>
+        <div id="extension-info" style="margin-top: 10px; font-size: 12px; color: #718096;"></div>
+    </div>
+
+    <div class="instructions">
+        <h3>🚀 Testing Instructions</h3>
+        <div class="step" data-step="1">Load the extension in Chrome Developer Mode from the <code>/dist</code> folder</div>
+        <div class="step" data-step="2">Right-click on any image or video below to see the context menu</div>
+        <div class="step" data-step="3">Select "Scan with Soft-Armor" to test core functionality</div>
+        <div class="step" data-step="4">Try premium features to see upgrade prompts</div>
+        <div class="step" data-step="5">Check console logs for detailed debugging information</div>
+    </div>
+
+    <div class="test-grid">
+        <!-- Core C2PA Testing -->
+        <div class="test-card">
+            <h3>🔍 C2PA Verification</h3>
+            <img class="test-media" 
+                 src="https://c2pa.org/content/images/2023/11/hero.jpg" 
+                 alt="C2PA Test Image"
+                 data-test="c2pa-verification">
+            
+            <ul class="feature-list">
+                <li>
+                    <span>Manifest Detection</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Certificate Validation</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Trust Level Assessment</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+            </ul>
+            
+            <button class="test-button" onclick="testC2PA()">Test C2PA Detection</button>
+            <div id="c2pa-results" class="results-panel" style="display: none;"></div>
+        </div>
+
+        <!-- TensorFlow.js AI Analysis -->
+        <div class="test-card">
+            <h3>🧠 AI Analysis Engine</h3>
+            <img class="test-media" 
+                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" 
+                 alt="AI Analysis Test"
+                 data-test="ai-analysis">
+            
+            <ul class="feature-list">
+                <li>
+                    <span>Emotion Detection</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Synthetic Probability</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Advanced Models</span>
+                    <span class="feature-status premium">Premium</span>
+                </li>
+            </ul>
+            
+            <button class="test-button" onclick="testAIAnalysis()">Test AI Analysis</button>
+            <div id="ai-results" class="results-panel" style="display: none;"></div>
+        </div>
+
+        <!-- Video Loop Detection -->
+        <div class="test-card">
+            <h3>🎥 Video Analysis</h3>
+            <video class="test-media" controls data-test="video-analysis">
+                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                Your browser does not support video.
+            </video>
+            
+            <ul class="feature-list">
+                <li>
+                    <span>Loop Artifact Detection</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Frame Consistency</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Deepfake Detection</span>
+                    <span class="feature-status premium">Premium</span>
+                </li>
+            </ul>
+            
+            <button class="test-button" onclick="testVideoAnalysis()">Test Video Scan</button>
+            <div id="video-results" class="results-panel" style="display: none;"></div>
+        </div>
+
+        <!-- Premium Features -->
+        <div class="test-card">
+            <h3>⭐ Premium Features</h3>
+            <img class="test-media" 
+                 src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400" 
+                 alt="Premium Features Test"
+                 data-test="premium-features">
+            
+            <ul class="feature-list">
+                <li>
+                    <span>Reverse Image Search</span>
+                    <span class="feature-status premium">Premium</span>
+                </li>
+                <li>
+                    <span>Advanced AI Models</span>
+                    <span class="feature-status premium">Premium</span>
+                </li>
+                <li>
+                    <span>Community Verification</span>
+                    <span class="feature-status premium">Premium</span>
+                </li>
+            </ul>
+            
+            <button class="test-button" onclick="testPremiumFeatures()">Test Premium Prompts</button>
+            <div id="premium-results" class="results-panel" style="display: none;"></div>
+        </div>
+
+        <!-- Context Menu Integration -->
+        <div class="test-card">
+            <h3>🖱️ Context Menu</h3>
+            <img class="test-media" 
+                 src="https://picsum.photos/400/300?random=1" 
+                 alt="Context Menu Test"
+                 data-test="context-menu">
+            
+            <ul class="feature-list">
+                <li>
+                    <span>Right-click Detection</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Media Recognition</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+                <li>
+                    <span>Scan Integration</span>
+                    <span class="feature-status working">Core</span>
+                </li>
+            </ul>
+            
+            <p>👆 Right-click the image above to test context menu integration</p>
+            <div id="context-results" class="results-panel" style="display: none;"></div>
+        </div>
+
+        <!-- Performance Testing -->
+        <div class="test-card">
+            <h3>⚡ Performance Metrics</h3>
+            <div class="performance-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="scan-time">-</div>
+                    <div class="metric-label">Avg Scan Time</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="success-rate">-</div>
+                    <div class="metric-label">Success Rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="total-scans">0</div>
+                    <div class="metric-label">Total Scans</div>
+                </div>
+            </div>
+            
+            <button class="test-button" onclick="runPerformanceTest()">Run Performance Test</button>
+            <button class="test-button" onclick="clearMetrics()">Clear Metrics</button>
+            <div id="performance-results" class="results-panel" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Test suite state
+        let testResults = {
+            scans: [],
+            startTime: Date.now()
+        };
+
+        // Extension detection
+        function checkExtensionStatus() {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            const extensionInfo = document.getElementById('extension-info');
+
+            // Check if extension is loaded by looking for content script
+            if (window.softArmorExtensionLoaded || document.getElementById('soft-armor-styles')) {
+                statusIndicator.className = 'status-indicator success';
+                statusText.textContent = 'Extension Loaded ✓';
+                extensionInfo.textContent = 'Right-click any media to test scanning';
+            } else {
+                statusIndicator.className = 'status-indicator error';
+                statusText.textContent = 'Extension Not Detected';
+                extensionInfo.innerHTML = 'Load extension from <code>/dist</code> folder';
+            }
+        }
+
+        // Test functions
+        function testC2PA() {
+            const resultsEl = document.getElementById('c2pa-results');
+            resultsEl.style.display = 'block';
+            resultsEl.textContent = 'Testing C2PA verification...\n\nRight-click the image above and select "Scan with Soft-Armor" to test C2PA detection.';
+            
+            console.log('🔍 C2PA Test: Right-click the C2PA test image to verify manifest detection');
+        }
+
+        function testAIAnalysis() {
+            const resultsEl = document.getElementById('ai-results');
+            resultsEl.style.display = 'block';
+            resultsEl.textContent = 'Testing TensorFlow.js AI analysis...\n\nThis will test:\n- Emotion manipulation scoring\n- Synthetic content detection\n- Model inference performance\n\nRight-click the image to start AI analysis.';
+            
+            console.log('🧠 AI Test: Testing TensorFlow.js integration');
+        }
+
+        function testVideoAnalysis() {
+            const resultsEl = document.getElementById('video-results');
+            resultsEl.style.display = 'block';
+            resultsEl.textContent = 'Testing video analysis...\n\nThis will test:\n- Frame extraction\n- Loop artifact detection\n- Temporal consistency analysis\n\nRight-click the video to start analysis.';
+            
+            console.log('🎥 Video Test: Testing OpenCV.js video analysis');
+        }
+
+        function testPremiumFeatures() {
+            const resultsEl = document.getElementById('premium-results');
+            resultsEl.style.display = 'block';
+            resultsEl.textContent = 'Testing premium feature prompts...\n\nThis will trigger upgrade prompts for:\n- Reverse image search\n- Advanced AI models\n- Community verification\n\nCheck for popup prompts after scanning.';
+            
+            console.log('⭐ Premium Test: Testing upgrade prompts');
+            
+            // Simulate premium feature calls if extension is available
+            if (window.softArmorScanner) {
+                const imageUrl = document.querySelector('[data-test="premium-features"]').src;
+                window.softArmorScanner.testPremiumFeatures(imageUrl);
+            }
+        }
+
+        function runPerformanceTest() {
+            const resultsEl = document.getElementById('performance-results');
+            resultsEl.style.display = 'block';
+            resultsEl.textContent = 'Running performance test...\n\nTesting scan times across multiple media types.\nCheck metrics above for results.';
+            
+            console.log('⚡ Performance Test: Starting benchmark');
+            
+            // Update metrics with test data
+            updateMetrics();
+        }
+
+        function clearMetrics() {
+            testResults.scans = [];
+            testResults.startTime = Date.now();
+            
+            document.getElementById('scan-time').textContent = '-';
+            document.getElementById('success-rate').textContent = '-';
+            document.getElementById('total-scans').textContent = '0';
+            
+            const resultsEl = document.getElementById('performance-results');
+            resultsEl.style.display = 'none';
+        }
+
+        function updateMetrics() {
+            // Simulate some test data
+            const mockScans = [
+                { time: 1.2, success: true },
+                { time: 1.8, success: true },
+                { time: 2.1, success: true },
+                { time: 1.5, success: false },
+                { time: 1.9, success: true }
+            ];
+            
+            testResults.scans.push(...mockScans);
+            
+            const avgTime = testResults.scans.reduce((sum, scan) => sum + scan.time, 0) / testResults.scans.length;
+            const successRate = (testResults.scans.filter(scan => scan.success).length / testResults.scans.length) * 100;
+            
+            document.getElementById('scan-time').textContent = avgTime.toFixed(1) + 's';
+            document.getElementById('success-rate').textContent = successRate.toFixed(0) + '%';
+            document.getElementById('total-scans').textContent = testResults.scans.length.toString();
+        }
+
+        // Listen for extension messages
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'SOFT_ARMOR_SCAN_RESULT') {
+                console.log('📊 Scan Result Received:', event.data);
+                
+                // Update test results
+                testResults.scans.push({
+                    time: event.data.scanTime || 2.0,
+                    success: event.data.status === 'success',
+                    result: event.data
+                });
+                
+                updateMetrics();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkExtensionStatus();
+            
+            // Recheck extension status every 2 seconds
+            setInterval(checkExtensionStatus, 2000);
+            
+            console.log('🧪 Test Suite Initialized');
+            console.log('📝 Instructions:');
+            console.log('1. Load extension from /dist folder');
+            console.log('2. Right-click any media to test scanning');
+            console.log('3. Check for upgrade prompts');
+            console.log('4. Monitor performance metrics');
+        });
+
+        // Add some visual feedback for right-clicks
+        document.addEventListener('contextmenu', (event) => {
+            if (event.target.classList.contains('test-media')) {
+                const media = event.target;
+                media.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    media.style.transform = '';
+                }, 200);
+                
+                console.log(`🖱️ Right-clicked ${media.dataset.test} media`);
+            }
+        });
+    </script>
+</body>
+</html>

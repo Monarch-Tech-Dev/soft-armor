@@ -3,7 +3,8 @@
  * Open Source Tier - Basic emotion manipulation detection
  */
 
-import * as tf from '@tensorflow/tfjs';
+// Dynamic import to reduce bundle size and build time
+let tf: any = null;
 
 export interface AIAnalysisResult {
   emotionScore: number;           // 0-1, higher = more manipulative
@@ -41,6 +42,13 @@ export class TensorFlowAnalyzer {
   async initialize(): Promise<boolean> {
     try {
       console.log('[TensorFlow] Initializing...');
+      
+      // Dynamic import of TensorFlow.js
+      if (!tf) {
+        console.log('[TensorFlow] Loading TensorFlow.js dynamically...');
+        tf = await import('@tensorflow/tfjs');
+        console.log('[TensorFlow] TensorFlow.js loaded successfully');
+      }
       
       // Set backend preference
       if (this.config.enableGPU) {
