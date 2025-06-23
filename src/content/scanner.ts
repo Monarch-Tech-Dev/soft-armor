@@ -3,6 +3,8 @@ import { LoopDetector } from '../detection/loop-detector';
 import { EmotionPulse } from '../detection/emotion-pulse';
 import { SoftArmorMetadataEngine } from '../detection/soft-armor-metadata-engine';
 import { TensorFlowAnalyzer, AIAnalysisResult } from '../detection/tensorflow-analyzer';
+import { premiumClient, UpgradePromptData } from '../api/premium-client';
+import { premiumUI } from './premium-ui';
 import { UIManager } from './ui';
 import { ScanResult, RiskLevel } from './types';
 import { ContextMenuIntegration, ScanConfig } from './context-menu-integration-fixed';
@@ -38,8 +40,21 @@ class SoftArmorScanner {
     
     this.initializeListeners();
     this.initializeContextMenuIntegration();
+    this.initializePremiumFeatures();
     
     console.log('✅ SoftArmorScanner: Lightweight initialization complete');
+  }
+
+  /**
+   * Initialize premium features integration
+   */
+  private async initializePremiumFeatures(): Promise<void> {
+    try {
+      await premiumClient.initialize();
+      console.log('💰 Premium client initialized:', premiumClient.getUserInfo());
+    } catch (error) {
+      console.warn('⚠️ Premium client initialization failed:', error);
+    }
   }
 
   private initializeListeners() {
@@ -350,6 +365,41 @@ class SoftArmorScanner {
       await this.tensorFlowAnalyzer.initialize();
     }
     return this.tensorFlowAnalyzer;
+  }
+
+  /**
+   * Test premium features integration
+   */
+  async testPremiumFeatures(mediaUrl: string): Promise<void> {
+    console.log('💰 Testing premium features for:', mediaUrl);
+
+    // Test reverse image search
+    try {
+      const reverseResult = await premiumClient.reverseImageSearch(mediaUrl);
+      
+      if ('upgradeUrl' in reverseResult) {
+        // Show upgrade prompt
+        premiumUI.showUpgradePrompt(reverseResult as UpgradePromptData);
+      } else {
+        console.log('🔍 Reverse search result:', reverseResult);
+      }
+    } catch (error) {
+      console.error('❌ Reverse search test failed:', error);
+    }
+
+    // Test advanced AI analysis
+    try {
+      const advancedResult = await premiumClient.advancedAnalysis(mediaUrl, ['emotion', 'synthetic']);
+      
+      if ('upgradeUrl' in advancedResult) {
+        // Show upgrade prompt
+        premiumUI.showUpgradePrompt(advancedResult as UpgradePromptData);
+      } else {
+        console.log('🧠 Advanced analysis result:', advancedResult);
+      }
+    } catch (error) {
+      console.error('❌ Advanced analysis test failed:', error);
+    }
   }
 
   private async performLightweightScan(mediaUrl: string, mediaElement: HTMLElement): Promise<ScanResult> {
